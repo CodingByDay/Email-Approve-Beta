@@ -143,6 +143,7 @@ namespace parser4mails
                 client.Authenticate(userName, password);
                 for (int i = 0; i < client.Count; i++)
                 {
+
                     // If the Message ID of the current message is the same as the parameter given, delete that message
                     if (client.GetMessageUid(i) == messageId)
                     {
@@ -170,7 +171,11 @@ namespace parser4mails
                     client.Authenticate(userName, password);
                     for (int i = 0; i < client.Count; i++)
                     {
-
+                        this.Dispatcher.Invoke(() =>
+                        {
+                            progress.Text = i + "out of: " + client.Count + " processed";
+                        });
+                    
                         var uID = client.GetMessageUid(i);
                         var message = client.GetMessage(i);
                         var subject = message.Subject;
@@ -178,6 +183,8 @@ namespace parser4mails
                         //  MessageBox.Show(message.TextBody.Trim());
                         excerpt = "";
 
+
+                         // update the ui thread asynchronously
 
                         //if (
                         //message.TextBody.Trim() == null) {
@@ -292,7 +299,11 @@ namespace parser4mails
                             catch (Exception ex)
                             {
                                 if (!ex.Message.ToLower().Contains("violation"))
-                                    MessageBox.Show("error:     " + ex);
+                                    this.Dispatcher.Invoke(() =>
+                                    {
+                                        MessageBox.Show("error:     " + ex);
+                                    });
+                                
                             }
                         }
 
@@ -460,13 +471,22 @@ namespace parser4mails
                                 }
                                 catch (Exception ex)
                                 {
-                                    MessageBox.Show("messageId: " + messageId + "Error on whitelist: " + ex.ToString());
+                                    this.Dispatcher.Invoke(() =>
+                                    {
+                                        MessageBox.Show("messageId: " + messageId + "Error on whitelist: " + ex.ToString());
+                                    });
+                             
+                                
                                 }
                             }
                         }
                         catch
                         {
-                            MessageBox.Show("Error on whitelist");
+                            this.Dispatcher.Invoke(() =>
+                            {
+                                MessageBox.Show("Error on whitelist");
+                            });
+                           
                         }
                         this.Dispatcher.Invoke(() =>
                         {
