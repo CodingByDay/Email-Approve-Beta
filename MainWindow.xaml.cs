@@ -449,8 +449,12 @@ namespace parser4mails
                                             white_duration = emailclass2.Hits.HitsHits[0].Source?.Duration;
 
                                         }
-                                        Window mailwindow = new mailwindow(subject, excerpt, messageId, addrfrom2, white_email, white_optin, white_optout, white_affiliate, uID, enddate, white_duration);
-                                        mailwindow.ShowDialog();
+                                        this.Dispatcher.Invoke(() =>
+                                        {
+                                            Window mailwindow = new mailwindow(subject, excerpt, messageId, addrfrom2, white_email, white_optin, white_optout, white_affiliate, uID, enddate, white_duration);
+                                            mailwindow.ShowDialog();
+                                        });
+                                
                                     }
 
                                 }
