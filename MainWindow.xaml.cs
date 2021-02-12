@@ -444,14 +444,11 @@ namespace parser4mails
                                         string potdomaila = "C:/inetpub/wwwroot/App_Data/pages/";
                                         System.IO.File.WriteAllText(potdomaila + messageId + ".html", content, Encoding.UTF8);
                                         //https://emmares.com/SearchAPI/Get_File/+ url
-                                        string filePath = @"C:\inetpub\wwwroot\python\Scraping\url.txt";
+                                        string filePath = @"C:\inetpub\wwwroot\python\Scraping\newEmails.txt";
 
-                                        string url = "https://emmares.com/SearchAPI/Get_File/" + messageId;
+                                        string url = "https://emmares.com/SearchAPI/Get_File/" + messageId + "\n";
 
-                                        using (StreamWriter outputFile = new StreamWriter(filePath))
-                                        {
-                                            outputFile.WriteLine(url + "\n");
-                                        }
+                                        File.WriteAllText(filePath, url);
                                         // MessageBox.Show("To je nov mail, ni na nobeni list ali pa je na whitelisti ampak se še ne objavi avtomatsko");
                                         string white_email = "";
                                         string white_optin = "";
