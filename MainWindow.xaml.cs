@@ -464,7 +464,11 @@ namespace parser4mails
                         {
                             MessageBox.Show("Error on whitelist");
                         }
-                        Mails_number.Content = client.Count.ToString();
+                        this.Dispatcher.Invoke(() =>
+                        {
+                            Mails_number.Content = client.Count.ToString();
+                        });
+                      
                     }
 
                 }

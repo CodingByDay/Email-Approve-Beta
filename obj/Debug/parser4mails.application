@@ -7,14 +7,14 @@
     <framework targetVersion="4.7.2" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="parser4mails.exe.manifest" size="8227">
+    <dependentAssembly dependencyType="install" codebase="parser4mails.exe.manifest" size="8702">
       <assemblyIdentity name="parser4mails.exe" version="1.0.0.1" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>gPnQR773pGvSNvi3OIPBjBA8zelg11R/Wn0u9nK5r9A=</dsig:DigestValue>
+        <dsig:DigestValue>1a75zRVpoGTOAqAdpkfsHDvQxrO586OXb3UFQYcVUAY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
