@@ -175,13 +175,22 @@ namespace parser4mails
                     var addrfrom = message.From;
                     //  MessageBox.Show(message.TextBody.Trim());
                     excerpt = "";
+                 
+                 
+                        //if (
+                        //message.TextBody.Trim() == null) {
 
-                    try { 
-           
-                        excerpt = message.TextBody.Trim();
-                    } catch
+                        //    excerpt = message.HtmlBody.Trim();
+                        //} else {
+                        //    excerpt = message.TextBody.Trim();
+                        //        }
+
+                    if(message.TextBody == null)
                     {
                         excerpt = message.HtmlBody.Trim();
+                    } else
+                    {
+                        excerpt = message.TextBody.Trim();
                     }
                     var cid = "";
                     var match = Regex.Match(excerpt, "Emmarescid###(.*)###");
@@ -410,7 +419,7 @@ namespace parser4mails
                                     }
                                     catch (Exception ex)
                                     {
-                                        MessageBox.Show("Error on uploading to es (Main) " + ex);
+                                       // MessageBox.Show("Error on uploading to es (Main) " + ex);
                                         string logerror = "C:/inetpub/wwwroot/App_Data/errors/";
                                         System.IO.File.WriteAllText(logerror + messageId + ".txt", jsonbody, Encoding.UTF8);
                                     }

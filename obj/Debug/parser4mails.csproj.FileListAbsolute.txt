@@ -67,3 +67,4 @@ C:\Users\hanuman\Desktop\parser_new\parser4mails\bin\Debug\System.Buffers.xml
 C:\Users\hanuman\Desktop\parser_new\parser4mails\obj\Debug\parser4mails.exe.manifest
 C:\Users\hanuman\Desktop\parser_new\parser4mails\obj\Debug\parser4mails.application
 C:\Users\hanuman\Desktop\parser_new\parser4mails\obj\Debug\parser4mails.csproj.CopyComplete
+C:\Users\hanuman\Desktop\parser_new\parser4mails\obj\Debug\parser4mails.csprojAssemblyReference.cache
