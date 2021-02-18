@@ -24,6 +24,7 @@ using System.Collections;
 using System.Collections.ObjectModel;
 using System.IO;
 using HtmlAgilityPack;
+using parser4mails.Assets;
 
 namespace parser4mails
 {
@@ -33,6 +34,7 @@ namespace parser4mails
     public partial class MainWindow : Window
     {
         private string excerpt;
+        public  static List<NameValueObjectList> dataForConfirmation = new List<NameValueObjectList>();
 
         public MainWindow()
         {
@@ -42,6 +44,7 @@ namespace parser4mails
             bool useSsl = false;
             string userName = "publish@emmares";
             string password = "publish123!";
+
             Mails_number.Content = "0";
             using (var client = new Pop3Client())
             {
@@ -468,6 +471,8 @@ namespace parser4mails
                                         }
                                         this.Dispatcher.Invoke(() =>
                                         {
+                                            dataForConfirmation.Add(new NameValueObjectList { subject = subject, excerpt = excerpt, messageId = messageId, addrfrom2 = addrfrom2, white_email = white_email, white_optin = white_optin, white_optout = white_optout, white_affiliate = white_affiliate, uID = uID, enddate = enddate, white_duration = white_duration });
+
                                             Window mailwindow = new mailwindow(subject, excerpt, messageId, addrfrom2, white_email, white_optin, white_optout, white_affiliate, uID, enddate, white_duration);
                                             mailwindow.ShowDialog();
                                         });
@@ -504,27 +509,38 @@ namespace parser4mails
                 }
             });
             }
+
+
+        private void Decide(object sender, RoutedEventArgs e)
+        {
+           
+        }
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             await Run();
         }
-        /*
+
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            string todaysdate = DateTime.Today.ToString("yyyy-MM-dd");
-            string jsonbody = "{\"query\": { \"match\": {\"enddate\": \"" + todaysdate + "\"}}}";
-            WebClient wc4 = new WebClient();
-            wc4.Headers.Add("Content-Type", "application/json");
-            try
-            {
-                wc4.UploadString(hostelastic + "/emmares_search_test/_delete_by_query", jsonbody);
-            }
-            catch
-            {
-                MessageBox.Show("Error on _delete_by_query");
-            }
 
-        }*/
+        }
+        /*
+private void Button_Click_1(object sender, RoutedEventArgs e)
+{
+   string todaysdate = DateTime.Today.ToString("yyyy-MM-dd");
+   string jsonbody = "{\"query\": { \"match\": {\"enddate\": \"" + todaysdate + "\"}}}";
+   WebClient wc4 = new WebClient();
+   wc4.Headers.Add("Content-Type", "application/json");
+   try
+   {
+       wc4.UploadString(hostelastic + "/emmares_search_test/_delete_by_query", jsonbody);
+   }
+   catch
+   {
+       MessageBox.Show("Error on _delete_by_query");
+   }
+
+}*/
     }
 
 }

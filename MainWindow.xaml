@@ -10,9 +10,12 @@
     <Grid>
         <Button Content="Add to elasticsearch" HorizontalAlignment="Left" Margin="321,205,0,0" VerticalAlignment="Top" Width="150" Click="Button_Click"/>
         <Label Name="Mails_number" Content="" HorizontalAlignment="Left" Margin="380,154,0,0" VerticalAlignment="Top" RenderTransformOrigin="4.184,0.923"/>
-        <Label Content="New emails:" HorizontalAlignment="Left" Margin="356,123,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.461,0.673"/>
+        <Label Content="New emails:" HorizontalAlignment="Left" Margin="365,123,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.461,0.673"/>
         <TextBox Name="progress"  HorizontalAlignment="Left" Height="23" Margin="321,269,0,0" TextWrapping="Wrap" Text="/" VerticalAlignment="Top" Width="150"/>
         <!--<Button Content="Delete by End Date" HorizontalAlignment="Left" Margin="10,82,0,0" VerticalAlignment="Top" Width="150" Click="Button_Click_1"/>-->
+        <Button Content="Decide on the new emails" HorizontalAlignment="Left" Margin="594,205,0,0" VerticalAlignment="Top" Width="150" Click="Decide"/>
+        <Label Content="" HorizontalAlignment="Left" Margin="631,266,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.461,0.673"/>
+        <TextBox Name="number" HorizontalAlignment="Left" Height="23" Margin="594,269,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="150"/>
 
     </Grid>
 </Window>

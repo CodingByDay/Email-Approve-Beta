@@ -41,6 +41,7 @@
         <Label Name="duration_label" Content="Duration in days (click Add for next emails)" Grid.Column="2" HorizontalAlignment="Left" Margin="317,445,0,0" VerticalAlignment="Top" Visibility="Hidden"/>
         <TextBox Name="duration_tbox" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="317,471,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="240" Visibility="Hidden"/>
         <Button Name="duration_btn" Content="Add to Whitelist" Grid.Column="2" HorizontalAlignment="Left" Margin="402,499,0,0" VerticalAlignment="Top" Width="101" Click="Duration_btn_Click" Visibility="Hidden"/>
+        <TextBox Name="numberOfEmails" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="207,595,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="286" Grid.ColumnSpan="2" TextChanged="TextBox_TextChanged"/>
 
 
     </Grid>
