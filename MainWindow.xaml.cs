@@ -444,7 +444,7 @@ namespace parser4mails
                                         string potdomaila = "C:/inetpub/wwwroot/App_Data/pages/";
                                         System.IO.File.WriteAllText(potdomaila + messageId + ".html", content, Encoding.UTF8);
                                         //https://emmares.com/SearchAPI/Get_File/+ url
-                                        string filePath = @"C:\inetpub\wwwroot\python\Scraping\newEmails.txt";
+                                        string filePath = "C:/inetpub/wwwroot/python/Scraping/newEmails.txt";
 
                                         string url = "https://emmares.com/SearchAPI/Get_File/" + messageId + "\n";
 
