@@ -97,8 +97,8 @@ namespace parser4mails
         public mailwindow(string subject, string excerpt, string messageId, string addrfrom2, string white_email, string white_optin, string white_optout, string white_affiliate, string uID, string enddate, string white_duration)
         {
             InitializeComponent();
-                                   
-            numberOfEmails.Text = MainWindow.dataForConfirmation.Count().ToString() + " mailov za odobrit/odstranit." 
+
+            numberOfEmails.Text = MainWindow.dataForConfirmation.Count().ToString() + " mailov za odobrit/odstranit."; 
             zadeva_label.Content = subject;
             string potdomaila = "C:/inetpub/wwwroot/App_Data/pages/";
             string emaillink = potdomaila + messageId + ".html";

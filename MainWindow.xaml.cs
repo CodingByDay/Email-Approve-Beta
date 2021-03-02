@@ -1,27 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using MailKit;
 using MailKit.Net.Pop3;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.Globalization;
 using Newtonsoft.Json.Converters;
 using System.Text.RegularExpressions;
-using System.Collections;
-using System.Collections.ObjectModel;
 using System.IO;
 using HtmlAgilityPack;
 using parser4mails.Assets;
@@ -35,6 +22,7 @@ namespace parser4mails
     {
         private string excerpt;
         public  static List<NameValueObjectList> dataForConfirmation = new List<NameValueObjectList>();
+        private int numbering=0;
 
         public MainWindow()
         {
@@ -471,6 +459,8 @@ namespace parser4mails
                                         }
                                         this.Dispatcher.Invoke(() =>
                                         {
+                                            numbering++;
+                                            number.Text = numbering.ToString() + "/" + client.Count;
                                             dataForConfirmation.Add(new NameValueObjectList { subject = subject, excerpt = excerpt, messageId = messageId, addrfrom2 = addrfrom2, white_email = white_email, white_optin = white_optin, white_optout = white_optout, white_affiliate = white_affiliate, uID = uID, enddate = enddate, white_duration = white_duration });
 
                                             Window mailwindow = new mailwindow(subject, excerpt, messageId, addrfrom2, white_email, white_optin, white_optout, white_affiliate, uID, enddate, white_duration);
@@ -513,7 +503,15 @@ namespace parser4mails
 
         private void Decide(object sender, RoutedEventArgs e)
         {
-           
+            ///
+            ///
+            dataForConfirmation.ForEach(x =>
+            {
+                
+                Window mailwindow = new mailwindow(x.subject, x.excerpt, x.messageId, x.addrfrom2, x.white_email, x.white_optin, x.white_optout, x.white_affiliate, x.uID, x.enddate, x.white_duration);
+                mailwindow.ShowDialog();
+            });
+
         }
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -524,21 +522,26 @@ namespace parser4mails
         {
 
         }
+
+        private void number_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+
+        }
         /*
 private void Button_Click_1(object sender, RoutedEventArgs e)
 {
-   string todaysdate = DateTime.Today.ToString("yyyy-MM-dd");
-   string jsonbody = "{\"query\": { \"match\": {\"enddate\": \"" + todaysdate + "\"}}}";
-   WebClient wc4 = new WebClient();
-   wc4.Headers.Add("Content-Type", "application/json");
-   try
-   {
-       wc4.UploadString(hostelastic + "/emmares_search_test/_delete_by_query", jsonbody);
-   }
-   catch
-   {
-       MessageBox.Show("Error on _delete_by_query");
-   }
+string todaysdate = DateTime.Today.ToString("yyyy-MM-dd");
+string jsonbody = "{\"query\": { \"match\": {\"enddate\": \"" + todaysdate + "\"}}}";
+WebClient wc4 = new WebClient();
+wc4.Headers.Add("Content-Type", "application/json");
+try
+{
+wc4.UploadString(hostelastic + "/emmares_search_test/_delete_by_query", jsonbody);
+}
+catch
+{
+MessageBox.Show("Error on _delete_by_query");
+}
 
 }*/
     }

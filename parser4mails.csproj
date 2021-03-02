@@ -120,6 +120,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Assets\NameValueObjectList.cs" />
     <Compile Include="mailwindow.xaml.cs">
       <DependentUpon>mailwindow.xaml</DependentUpon>
     </Compile>
@@ -166,7 +167,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Assets\" />
     <Folder Include="SpamFiltering\" />
   </ItemGroup>
   <ItemGroup>
