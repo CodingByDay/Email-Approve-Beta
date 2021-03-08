@@ -510,6 +510,8 @@ namespace parser4mails
                 
                 Window mailwindow = new mailwindow(x.subject, x.excerpt, x.messageId, x.addrfrom2, x.white_email, x.white_optin, x.white_optout, x.white_affiliate, x.uID, x.enddate, x.white_duration);
                 mailwindow.ShowDialog();
+                dataForConfirmation.Remove(x);
+                number.Text = (int.Parse(number.Text) - 1).ToString();
             });
 
         }
