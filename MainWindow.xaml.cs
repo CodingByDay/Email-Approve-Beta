@@ -425,8 +425,8 @@ namespace parser4mails
 
                                             string url = "https://emmares.com/SearchAPI/Get_File/" + messageId + "\n";
 
-                                            System.IO.File.WriteAllText(filePath, url, Encoding.UTF8);
-                                            System.IO.File.WriteAllText(filePath, Environment.NewLine, Encoding.UTF8);
+                                            System.IO.File.AppendAllText(filePath, url, Encoding.UTF8);
+                                            System.IO.File.AppendAllText(filePath, Environment.NewLine, Encoding.UTF8);
 
                                         }
                                         catch (Exception ex)
@@ -440,14 +440,13 @@ namespace parser4mails
                                     else
                                     {
                                         string potdomaila = "C:/inetpub/wwwroot/App_Data/pages/";
-                                        System.IO.File.WriteAllText(potdomaila + messageId + ".html", content, Encoding.UTF8);
                                         //https://emmares.com/SearchAPI/Get_File/+ url
                                         string filePath = "C:/inetpub/wwwroot/python/Scraping/newEmails.txt";
 
                                         string url = "https://emmares.com/SearchAPI/Get_File/" + messageId + "\n";
 
-                                        File.WriteAllText(filePath, url);
-                                        File.WriteAllText(filePath, Environment.NewLine, Encoding.UTF8);
+                                        File.AppendAllText(filePath, url);
+                                        File.AppendAllText(filePath, Environment.NewLine, Encoding.UTF8);
 
                                         // MessageBox.Show("To je nov mail, ni na nobeni list ali pa je na whitelisti ampak se še ne objavi avtomatsko");
                                         string white_email = "";
