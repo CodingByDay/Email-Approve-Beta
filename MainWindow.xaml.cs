@@ -425,7 +425,9 @@ namespace parser4mails
 
                                             string url = "https://emmares.com/SearchAPI/Get_File/" + messageId + "\n";
 
-                                            File.WriteAllText(filePath, url);
+                                            System.IO.File.WriteAllText(filePath, url, Encoding.UTF8);
+                                            System.IO.File.WriteAllText(filePath, Environment.NewLine, Encoding.UTF8);
+
                                         }
                                         catch (Exception ex)
                                         {
@@ -445,6 +447,8 @@ namespace parser4mails
                                         string url = "https://emmares.com/SearchAPI/Get_File/" + messageId + "\n";
 
                                         File.WriteAllText(filePath, url);
+                                        File.WriteAllText(filePath, Environment.NewLine, Encoding.UTF8);
+
                                         // MessageBox.Show("To je nov mail, ni na nobeni list ali pa je na whitelisti ampak se še ne objavi avtomatsko");
                                         string white_email = "";
                                         string white_optin = "";
