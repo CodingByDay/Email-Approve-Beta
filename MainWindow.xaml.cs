@@ -420,7 +420,12 @@ namespace parser4mails
                                             //delete from pop
                                             DeleteMessageByUID(uID);
                                             string potdomaila = "C:/inetpub/wwwroot/App_Data/pages/";
-                                            System.IO.File.WriteAllText(potdomaila + messageId + ".html", content, Encoding.UTF8);
+                                            System.IO.File.WriteAllText(potdomaila + messageId + ".html", content, Encoding.UTF8)
+                                            string filePath = "C:/inetpub/wwwroot/python/Scraping/newEmails.txt";
+
+                                            string url = "https://emmares.com/SearchAPI/Get_File/" + messageId + "\n";
+
+                                            File.WriteAllText(filePath, url);
                                         }
                                         catch (Exception ex)
                                         {
