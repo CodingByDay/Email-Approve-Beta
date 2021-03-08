@@ -463,8 +463,8 @@ namespace parser4mails
                                             number.Text = numbering.ToString() + "/" + client.Count;
                                             dataForConfirmation.Add(new NameValueObjectList { subject = subject, excerpt = excerpt, messageId = messageId, addrfrom2 = addrfrom2, white_email = white_email, white_optin = white_optin, white_optout = white_optout, white_affiliate = white_affiliate, uID = uID, enddate = enddate, white_duration = white_duration });
 
-                                            Window mailwindow = new mailwindow(subject, excerpt, messageId, addrfrom2, white_email, white_optin, white_optout, white_affiliate, uID, enddate, white_duration);
-                                            mailwindow.ShowDialog();
+                                            //Window mailwindow = new mailwindow(subject, excerpt, messageId, addrfrom2, white_email, white_optin, white_optout, white_affiliate, uID, enddate, white_duration);
+                                            //mailwindow.ShowDialog();
                                         });
                                 
                                     }
@@ -503,8 +503,8 @@ namespace parser4mails
 
         private void Decide(object sender, RoutedEventArgs e)
         {
-            ///
-            ///
+            
+            
             dataForConfirmation.ForEach(x =>
             {
                 
