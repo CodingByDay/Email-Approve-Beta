@@ -24,7 +24,7 @@ namespace parser4mails
         public  static List<NameValueObjectList> dataForConfirmation = new List<NameValueObjectList>();
         private int numbering=0;
         private List<String> urls;
-        private string filePath;
+        private string filePathWrite = "C:/inetpub/wwwroot/python/Scraping/write.txt";;
 
         public MainWindow()
         {
@@ -533,8 +533,8 @@ namespace parser4mails
         {
             await Task.Run(() =>
             {
-              
-            
+
+                writeAsync();
             
              for (int i = 0; i<dataForConfirmation.Count-1;i++)
                 {
