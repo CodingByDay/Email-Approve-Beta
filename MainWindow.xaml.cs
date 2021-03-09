@@ -426,10 +426,13 @@ namespace parser4mails
                                             string url = "https://emmares.com/SearchAPI/Get_File/" + messageId + "\n";
 
 
-                                            using (System.IO.StreamWriter sw = System.IO.File.AppendText(filePath))
+                                            using (StreamWriter sw = new StreamWriter(filePath))
                                             {
+
+                                                sw.BaseStream.Seek(0, SeekOrigin.End);
                                                 sw.WriteLine(url);
                                             }
+
                                         }
 
                                         catch (Exception ex)
@@ -448,8 +451,11 @@ namespace parser4mails
 
                                         string url = "https://emmares.com/SearchAPI/Get_File/" + messageId + "\n";
 
-                                        using (System.IO.StreamWriter sw = System.IO.File.AppendText(filePath))
+
+                                        using (StreamWriter sw = new StreamWriter(filePath))
                                         {
+
+                                            sw.BaseStream.Seek(0, SeekOrigin.End);
                                             sw.WriteLine(url);
                                         }
 
