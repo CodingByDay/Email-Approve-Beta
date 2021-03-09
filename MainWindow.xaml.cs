@@ -24,7 +24,7 @@ namespace parser4mails
         public  static List<NameValueObjectList> dataForConfirmation = new List<NameValueObjectList>();
         private int numbering=0;
         private List<String> urls;
-        private string filePathWrite = "C:/inetpub/wwwroot/python/Scraping/write.txt";;
+        private string filePathWrite = "C:/inetpub/wwwroot/python/Scraping/write.txt";
 
         public MainWindow()
         {
@@ -423,12 +423,12 @@ namespace parser4mails
                                             DeleteMessageByUID(uID);
                                             string potdomaila = "C:/inetpub/wwwroot/App_Data/pages/";
                                             System.IO.File.WriteAllText(potdomaila + messageId + ".html", content, Encoding.UTF8);
-                                            filePath = "C:/inetpub/wwwroot/python/Scraping/newEmails.txt";
+                                            string filePath = "C:/inetpub/wwwroot/python/Scraping/newEmails.txt";
 
                                             string url = "https://emmares.com/SearchAPI/Get_File/" + messageId + "\n";
 
+                                            urls.Add(url);
 
-                                           
 
                                         }
 
@@ -516,7 +516,7 @@ namespace parser4mails
         {
             urls.ForEach(x =>
             {
-                using (StreamWriter sw = new StreamWriter(filePath))
+                using (StreamWriter sw = new StreamWriter(filePathWrite))
                 {
 
 
@@ -535,8 +535,8 @@ namespace parser4mails
             {
 
                 writeAsync();
-            
-             for (int i = 0; i<dataForConfirmation.Count-1;i++)
+
+                for (int i = 0; i<dataForConfirmation.Count-1;i++)
                 {
                     try
                     {
@@ -568,7 +568,7 @@ namespace parser4mails
 
         private async void Decide(object sender, RoutedEventArgs e)
         {
-
+            writeAsync();
             await RunConfirm();
 
         }
