@@ -426,10 +426,10 @@ namespace parser4mails
                                             string url = "https://emmares.com/SearchAPI/Get_File/" + messageId + "\n";
 
 
-                                            StreamWriter sw = new StreamWriter(filePath, true);
-
-                                            sw.WriteLine(url);
-                                            sw.Close();
+                                            using (System.IO.StreamWriter sw = System.IO.File.AppendText(filePath))
+                                            {
+                                                sw.WriteLine(url);
+                                            }
                                         }
 
                                         catch (Exception ex)
@@ -448,10 +448,10 @@ namespace parser4mails
 
                                         string url = "https://emmares.com/SearchAPI/Get_File/" + messageId + "\n";
 
-                                        StreamWriter sw = new StreamWriter(filePath, true);
-
-                                        sw.WriteLine(url);
-                                        sw.Close();
+                                        using (System.IO.StreamWriter sw = System.IO.File.AppendText(filePath))
+                                        {
+                                            sw.WriteLine(url);
+                                        }
 
 
                                         // MessageBox.Show("To je nov mail, ni na nobeni list ali pa je na whitelisti ampak se še ne objavi avtomatsko");
