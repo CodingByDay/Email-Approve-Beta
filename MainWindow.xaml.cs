@@ -425,8 +425,11 @@ namespace parser4mails
 
                                             string url = "https://emmares.com/SearchAPI/Get_File/" + messageId + "\n";
 
-                                            StreamWriter sw = File.AppendText(filePath);
-                                            sw.WriteLine(url);
+                                            FileStream fsAppend = new FileStream(filePath, FileMode.Append);
+                                            StreamWriter swAppend = new StreamWriter(fsAppend);
+
+                                            swAppend.WriteLine(url);
+                                            swAppend.Close();
 
                                         }
                                         catch (Exception ex)
@@ -444,8 +447,11 @@ namespace parser4mails
                                         string filePath = "C:/inetpub/wwwroot/python/Scraping/newEmails.txt";
 
                                         string url = "https://emmares.com/SearchAPI/Get_File/" + messageId + "\n";
-                                        StreamWriter sw = File.AppendText(filePath);
-                                        sw.WriteLine(url);
+                                        FileStream fsAppend = new FileStream(filePath, FileMode.Append);
+                                        StreamWriter swAppend = new StreamWriter(fsAppend);
+                                        
+                                        swAppend.WriteLine(url);
+                                        swAppend.Close();
                                      
 
                                         // MessageBox.Show("To je nov mail, ni na nobeni list ali pa je na whitelisti ampak se še ne objavi avtomatsko");
@@ -525,11 +531,10 @@ namespace parser4mails
                 {
                     client.Connect(hostName, port, useSsl);
                     client.Authenticate(userName, password);
-                    for (int i = 0; i < dataForConfirmation.Count; i++)
+                    for (int i = 0; i < dataForConfirmation.Count-1; i++)
                     {
                         this.Dispatcher.Invoke(() =>
                         {
-                            number.Text = i + " out of: " + dataForConfirmation + " emails processed. :)";
                         });
 
                         var uID = client.GetMessageUid(i);
@@ -809,9 +814,12 @@ namespace parser4mails
                                         string filePath = "C:/inetpub/wwwroot/python/Scraping/newEmails.txt";
 
                                         string url = "https://emmares.com/SearchAPI/Get_File/" + messageId + "\n";
+                                        FileStream fsAppend = new FileStream(filePath, FileMode.Append);
+                                        StreamWriter swAppend = new StreamWriter(fsAppend);
 
-                                        File.AppendAllText(filePath, url);
-                                        File.AppendAllText(filePath, Environment.NewLine, Encoding.UTF8);
+                                        swAppend.WriteLine(url);
+                                        swAppend.Close();
+                                  
 
                                         // MessageBox.Show("To je nov mail, ni na nobeni list ali pa je na whitelisti ampak se še ne objavi avtomatsko");
                                         string white_email = "";
@@ -832,12 +840,9 @@ namespace parser4mails
                                         }
                                         this.Dispatcher.Invoke(() =>
                                         {
-                                            numbering++;
-                                            number.Text = numbering.ToString() + "/" + client.Count;
-                                            dataForConfirmation.Add(new NameValueObjectList { subject = subject, excerpt = excerpt, messageId = messageId, addrfrom2 = addrfrom2, white_email = white_email, white_optin = white_optin, white_optout = white_optout, white_affiliate = white_affiliate, uID = uID, enddate = enddate, white_duration = white_duration });
-
-                                            //Window mailwindow = new mailwindow(subject, excerpt, messageId, addrfrom2, white_email, white_optin, white_optout, white_affiliate, uID, enddate, white_duration);
-                                            //mailwindow.ShowDialog();
+                                           
+                                            Window mailwindow = new mailwindow(subject, excerpt, messageId, addrfrom2, white_email, white_optin, white_optout, white_affiliate, uID, enddate, white_duration);
+                                            mailwindow.ShowDialog();
                                         });
 
                                     }
@@ -847,7 +852,7 @@ namespace parser4mails
                                 {
                                     this.Dispatcher.Invoke(() =>
                                     {
-                                      //  MessageBox.Show("messageId: " + messageId + "Error on whitelist: " + ex.ToString());
+                                        MessageBox.Show("messageId: " + messageId + "Error on whitelist: " + ex.ToString());
                                     });
 
 
@@ -864,7 +869,7 @@ namespace parser4mails
                         }
                         this.Dispatcher.Invoke(() =>
                         {
-                         //   Mails_number.Content = client.Count.ToString();
+                         //  Mails_number.Content = client.Count.ToString();
                         });
 
                     }
