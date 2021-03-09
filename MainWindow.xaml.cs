@@ -23,6 +23,8 @@ namespace parser4mails
         private string excerpt;
         public  static List<NameValueObjectList> dataForConfirmation = new List<NameValueObjectList>();
         private int numbering=0;
+        private List<String> urls;
+        private string filePath;
 
         public MainWindow()
         {
@@ -421,17 +423,12 @@ namespace parser4mails
                                             DeleteMessageByUID(uID);
                                             string potdomaila = "C:/inetpub/wwwroot/App_Data/pages/";
                                             System.IO.File.WriteAllText(potdomaila + messageId + ".html", content, Encoding.UTF8);
-                                            string filePath = "C:/inetpub/wwwroot/python/Scraping/newEmails.txt";
+                                            filePath = "C:/inetpub/wwwroot/python/Scraping/newEmails.txt";
 
                                             string url = "https://emmares.com/SearchAPI/Get_File/" + messageId + "\n";
 
 
-                                            using (StreamWriter sw = new StreamWriter(filePath))
-                                            {
-
-                                                sw.BaseStream.Seek(0, SeekOrigin.End);
-                                                sw.WriteLine(url);
-                                            }
+                                           
 
                                         }
 
@@ -452,12 +449,7 @@ namespace parser4mails
                                         string url = "https://emmares.com/SearchAPI/Get_File/" + messageId + "\n";
 
 
-                                        using (StreamWriter sw = new StreamWriter(filePath))
-                                        {
-
-                                            sw.BaseStream.Seek(0, SeekOrigin.End);
-                                            sw.WriteLine(url);
-                                        }
+                                        urls.Add(url);
 
 
                                         // MessageBox.Show("To je nov mail, ni na nobeni list ali pa je na whitelisti ampak se še ne objavi avtomatsko");
@@ -520,13 +512,30 @@ namespace parser4mails
             });
             }
 
+        private void writeAsync()
+        {
+            urls.ForEach(x =>
+            {
+                using (StreamWriter sw = new StreamWriter(filePath))
+                {
 
 
+                    sw.BaseStream.Seek(0, SeekOrigin.End);
+                    sw.WriteLine(x);
+                
+                }
+            });
+                
+            
 
+        }
         private async Task RunConfirm()
         {
             await Task.Run(() =>
             {
+              
+            
+            
              for (int i = 0; i<dataForConfirmation.Count-1;i++)
                 {
                     try
