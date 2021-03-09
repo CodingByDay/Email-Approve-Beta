@@ -524,16 +524,28 @@ namespace parser4mails
             {
              for (int i = 0; i<dataForConfirmation.Count-1;i++)
                 {
-                    this.Dispatcher.Invoke(() =>
+                    try
                     {
-                        number.Text = dataForConfirmation.Count.ToString();
-                        var x = dataForConfirmation[i];
+                        this.Dispatcher.Invoke(() =>
+                        {
+                            number.Text = dataForConfirmation.Count.ToString();
+                            var x = dataForConfirmation[i];
 
-                         Window mailwindow = new mailwindow(x.subject, x.excerpt, x.messageId, x.addrfrom2, x.white_email, x.white_optin, x.white_optout, x.white_affiliate, x.uID, x.enddate, x.white_duration);
-                         mailwindow.ShowDialog();
+                            Window mailwindow = new mailwindow(x.subject, x.excerpt, x.messageId, x.addrfrom2, x.white_email, x.white_optin, x.white_optout, x.white_affiliate, x.uID, x.enddate, x.white_duration);
+                            mailwindow.ShowDialog();
 
-                        dataForConfirmation.RemoveAt(i);
-                    });
+                            dataForConfirmation.RemoveAt(i);
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        this.Dispatcher.Invoke(() =>
+                        {
+                            MessageBox.Show(ex.ToString());
+                        });
+
+
+                    } 
                 }
             });
         }
