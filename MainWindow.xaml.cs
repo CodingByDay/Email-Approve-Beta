@@ -526,10 +526,13 @@ namespace parser4mails
                 {
                     this.Dispatcher.Invoke(() =>
                     {
+                        number.Text = dataForConfirmation.Count.ToString();
                         var x = dataForConfirmation[i];
 
                          Window mailwindow = new mailwindow(x.subject, x.excerpt, x.messageId, x.addrfrom2, x.white_email, x.white_optin, x.white_optout, x.white_affiliate, x.uID, x.enddate, x.white_duration);
                          mailwindow.ShowDialog();
+
+                        dataForConfirmation.RemoveAt(i);
                     });
                 }
             });
