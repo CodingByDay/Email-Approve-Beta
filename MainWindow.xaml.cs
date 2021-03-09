@@ -425,13 +425,13 @@ namespace parser4mails
 
                                             string url = "https://emmares.com/SearchAPI/Get_File/" + messageId + "\n";
 
-                                            
-                                            using (FileStream fs = new FileStream(filePath, FileMode.Append, FileAccess.Write))
-                                            using (StreamWriter sw = new StreamWriter(fs))
-                                            {
-                                                sw.WriteLine(url);
-                                            }
+
+                                            StreamWriter sw = new StreamWriter(filePath, true);
+
+                                            sw.WriteLine(url);
+                                            sw.Close();
                                         }
+
                                         catch (Exception ex)
                                         {
                                             // MessageBox.Show("Error on uploading to es (Main) " + ex);
@@ -448,11 +448,10 @@ namespace parser4mails
 
                                         string url = "https://emmares.com/SearchAPI/Get_File/" + messageId + "\n";
 
-                                        using (FileStream fs = new FileStream(filePath, FileMode.Append, FileAccess.Write))
-                                        using (StreamWriter sw = new StreamWriter(fs))
-                                        {
-                                            sw.WriteLine(url);
-                                        }
+                                        StreamWriter sw = new StreamWriter(filePath, true);
+
+                                        sw.WriteLine(url);
+                                        sw.Close();
 
 
                                         // MessageBox.Show("To je nov mail, ni na nobeni list ali pa je na whitelisti ampak se še ne objavi avtomatsko");
