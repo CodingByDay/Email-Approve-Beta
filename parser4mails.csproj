@@ -51,10 +51,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>F06716A107B693B83F783BB7F327C826AD45215E</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>4005AE44389C895D1AC8AB0D03E92AA5D5EBEC10</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>parser4mails_2_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>parser4mails_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -148,8 +148,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
-    <None Include="parser4mails_1_TemporaryKey.pfx" />
-    <None Include="parser4mails_2_TemporaryKey.pfx" />
     <None Include="parser4mails_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using HtmlAgilityPack;
 using MailKit.Net.Pop3;
 using Newtonsoft.Json;
-using System.Globalization;
 using Newtonsoft.Json.Converters;
-using System.Text.RegularExpressions;
-using System.IO;
-using HtmlAgilityPack;
 using parser4mails.Assets;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Net;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Windows;
 
 namespace parser4mails
 {
@@ -245,9 +245,16 @@ namespace parser4mails
                             subject = Regex.Replace(subject, @"\t", " ");
                         }
 
-
+                        if (
+                            message.MessageId == null
+                        )
+                        {
+                            i++;
+                        }
                         float score = 0.0F;
+                      
                         var messageId = message.MessageId;
+                        
                         messageId = Regex.Replace(messageId, "\"", "");
                         messageId = Regex.Replace(messageId, "/", "");
                         var preview = message.TextBody;
@@ -574,7 +581,13 @@ namespace parser4mails
         }
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            await Run();
+            try
+            {
+                await Run();
+            } catch
+            {
+                
+            }
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

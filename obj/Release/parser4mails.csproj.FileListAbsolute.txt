@@ -71,3 +71,11 @@ C:\Users\hanuman\Desktop\Email-Approve-Beta\obj\Release\parser4mails.application
 C:\Users\hanuman\Desktop\Email-Approve-Beta\obj\Release\parser4mails.csproj.CopyComplete
 C:\Users\hanuman\Desktop\Email-Approve-Beta\obj\Release\parser4mails.exe
 C:\Users\hanuman\Desktop\Email-Approve-Beta\obj\Release\parser4mails.pdb
+C:\Users\emmaresmvp\Desktop\em\Email-Approve-Beta\obj\Release\parser4mails.csprojAssemblyReference.cache
+C:\Users\emmaresmvp\Desktop\em\Email-Approve-Beta\obj\Release\mailwindow.g.cs
+C:\Users\emmaresmvp\Desktop\em\Email-Approve-Beta\obj\Release\MainWindow.g.cs
+C:\Users\emmaresmvp\Desktop\em\Email-Approve-Beta\obj\Release\App.g.cs
+C:\Users\emmaresmvp\Desktop\em\Email-Approve-Beta\obj\Release\parser4mails_MarkupCompile.cache
+C:\Users\emmaresmvp\Desktop\em\Email-Approve-Beta\obj\Release\parser4mails_MarkupCompile.lref
+C:\Users\emmaresmvp\Desktop\em\Email-Approve-Beta\obj\Release\parser4mails.exe
+C:\Users\emmaresmvp\Desktop\em\Email-Approve-Beta\obj\Release\parser4mails.pdb
