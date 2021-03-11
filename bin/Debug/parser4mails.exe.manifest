@@ -115,14 +115,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="parser4mails.exe" size="434176">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="parser4mails.exe" size="433664">
       <assemblyIdentity name="parser4mails" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>1XdVjMZ8RZ5Zk/K5LSeuCllonfuYVxD58vsINAoER4w=</dsig:DigestValue>
+        <dsig:DigestValue>qOGZ1N/TfCnso1WEru3K/FhcjPbuYx/cLsyb2ehKvfg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

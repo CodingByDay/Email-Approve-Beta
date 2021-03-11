@@ -21,10 +21,11 @@ namespace parser4mails
     public partial class MainWindow : Window
     {
         private string excerpt;
-        public  static List<NameValueObjectList> dataForConfirmation = new List<NameValueObjectList>();
-        private int numbering=0;
+        public static List<NameValueObjectList> dataForConfirmation = new List<NameValueObjectList>();
+        private int numbering = 0;
         private List<String> urls;
         private string filePathWrite = "C:/inetpub/wwwroot/python/Scraping/write.txt";
+        private int page;
 
         public MainWindow()
         {
@@ -168,7 +169,7 @@ namespace parser4mails
                         {
                             progress.Text = i + " out of: " + client.Count + " emails processed. :)";
                         });
-                    
+
                         var uID = client.GetMessageUid(i);
                         var message = client.GetMessage(i);
                         var subject = message.Subject;
@@ -177,7 +178,7 @@ namespace parser4mails
                         excerpt = "";
 
 
-                         // update the ui thread asynchronously
+                        // update the ui thread asynchronously
 
                         //if (
                         //message.TextBody.Trim() == null) {
@@ -245,16 +246,15 @@ namespace parser4mails
                             subject = Regex.Replace(subject, @"\t", " ");
                         }
 
-                        if (
-                            message.MessageId == null
-                        )
-                        {
-                            i++;
-                        }
+
                         float score = 0.0F;
-                      
+
                         var messageId = message.MessageId;
-                        
+                        if (message.MessageId == null | message.Subject == null)
+                        {
+                            continue;
+                        }
+
                         messageId = Regex.Replace(messageId, "\"", "");
                         messageId = Regex.Replace(messageId, "/", "");
                         var preview = message.TextBody;
@@ -303,7 +303,7 @@ namespace parser4mails
                                     {
                                         MessageBox.Show("error:     " + ex);
                                     });
-                                
+
                             }
                         }
 
@@ -456,7 +456,6 @@ namespace parser4mails
                                         string url = "https://emmares.com/SearchAPI/Get_File/" + messageId + "\n";
 
 
-                                        urls.Add(url);
 
 
                                         // MessageBox.Show("To je nov mail, ni na nobeni list ali pa je na whitelisti ampak se še ne objavi avtomatsko");
@@ -485,7 +484,7 @@ namespace parser4mails
                                             // Window mailwindow = new mailwindow(subject, excerpt, messageId, addrfrom2, white_email, white_optin, white_optout, white_affiliate, uID, enddate, white_duration);
                                             //Mailwindow.ShowDialog();
                                         });
-                                
+
                                     }
 
                                 }
@@ -495,8 +494,8 @@ namespace parser4mails
                                     {
                                         MessageBox.Show("messageId: " + messageId + "Error on whitelist: " + ex.ToString());
                                     });
-                             
-                                
+
+
                                 }
                             }
                         }
@@ -506,44 +505,31 @@ namespace parser4mails
                             {
                                 MessageBox.Show("Error on whitelist");
                             });
-                           
+
                         }
                         this.Dispatcher.Invoke(() =>
                         {
                             Mails_number.Content = client.Count.ToString();
                         });
-                      
+
                     }
 
                 }
             });
-            }
-
-        private void writeAsync()
-        {
-            urls.ForEach(x =>
-            {
-                using (StreamWriter sw = new StreamWriter(filePathWrite))
-                {
-
-
-                    sw.BaseStream.Seek(0, SeekOrigin.End);
-                    sw.WriteLine(x);
-                
-                }
-            });
-                
-            
-
         }
+
+
+
+
+
+
         private async Task RunConfirm()
         {
             await Task.Run(() =>
             {
 
-                writeAsync();
 
-                for (int i = 0; i<dataForConfirmation.Count-1;i++)
+                for (int i = 0; i < dataForConfirmation.Count-1 | dataForConfirmation.Count>2; i++)
                 {
                     try
                     {
@@ -554,8 +540,9 @@ namespace parser4mails
 
                             Window mailwindow = new mailwindow(x.subject, x.excerpt, x.messageId, x.addrfrom2, x.white_email, x.white_optin, x.white_optout, x.white_affiliate, x.uID, x.enddate, x.white_duration);
                             mailwindow.ShowDialog();
+                            page = i;
+                            mailwindow.Closed += Mailwindow_Closed;
 
-                            dataForConfirmation.RemoveAt(i);
                         });
                     }
                     catch (Exception ex)
@@ -566,16 +553,19 @@ namespace parser4mails
                         });
 
 
-                    } 
+                    }
                 }
             });
         }
 
-
+        private void Mailwindow_Closed(object sender, EventArgs e)
+        {
+            dataForConfirmation.RemoveAt(page);
+            number.Text = numbering--.ToString();
+        }
 
         private async void Decide(object sender, RoutedEventArgs e)
         {
-            writeAsync();
             await RunConfirm();
 
         }
@@ -584,9 +574,10 @@ namespace parser4mails
             try
             {
                 await Run();
-            } catch
+            }
+            catch
             {
-                
+
             }
         }
 
