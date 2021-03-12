@@ -434,7 +434,7 @@ namespace parser4mails
 
                                             string url = "https://emmares.com/SearchAPI/Get_File/" + messageId + "\n";
 
-                                            urls.Add(url);
+                                            
 
 
                                         }
@@ -529,7 +529,7 @@ namespace parser4mails
             {
 
 
-                for (int i = 0; i < dataForConfirmation.Count-1 | dataForConfirmation.Count>2; i++)
+                for (int i = 0; i < dataForConfirmation.Count-1; i++)
                 {
                     try
                     {
