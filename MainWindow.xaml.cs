@@ -26,6 +26,7 @@ namespace parser4mails
         private List<String> urls;
         private string filePathWrite = "C:/inetpub/wwwroot/python/Scraping/write.txt";
         private int page;
+        
 
         public MainWindow()
         {
@@ -35,7 +36,7 @@ namespace parser4mails
             bool useSsl = false;
             string userName = "publish@emmares";
             string password = "publish123!";
-           // Testing stuff.
+            // Testing stuff.
             Mails_number.Content = "0";
             using (var client = new Pop3Client())
             {
@@ -150,32 +151,34 @@ namespace parser4mails
         }
 
 
-        private async Task WaitForCMD(string fileName, string PathToPicture)
+        private void WaitForCMD(string Url, string FileName, string PathToPicture)
         {
-            await Task.Run(() =>
-            {
+            
+                //GetSiteThumbnail.exe http://www.cognifide.com/ cognifide.jpg 1280 1024 640 480
                 bool isScreenShotTaken = false;
-                var argument = @"/C C:\Users\emmaresmvp\Desktop\GetSiteThumbnail.exe ";
+                var argument = "C:\\Users\\emmaresmvp\\Desktop\\GetSiteThumbnail.exe" + " " + Url +" "+ "C:\\Users\\emmaresmvp\\Desktop\\cognifis.jpg 1280 1024 640 480";
+                var final = "/C" + argument;
+                //var argument = @"/C C:\Users\emmaresmvp\Desktop\GetSiteThumbnail.exe" +Url + "C:/Users\\emmaresmvp\\Desktop\\cognifis.jpg 1280 1024 640 480";
                 System.Diagnostics.Process process = new System.Diagnostics.Process();
                 System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
                 startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
                 startInfo.FileName = "cmd.exe";
-                startInfo.Arguments = argument;
+                startInfo.Arguments = final;
                 process.StartInfo = startInfo;
                 process.Start();
 
 
 
-                if(File.Exists(PathToPicture))
-                {
-                    isScreenShotTaken = true;
-                } else
-                {
-                    while (isScreenShotTaken == false) {
-                        Task.Delay(1000);
-                    };
+                //if(File.Exists(PathToPicture))
+                //{
+                //    isScreenShotTaken = true;
+                //} else
+                //{
+                //    while (isScreenShotTaken == false) {
+                //        Task.Delay(1000);
+                //    };
 
-                }
+                //}
 
 
                 // browser exception url not found.
@@ -187,13 +190,12 @@ namespace parser4mails
                 // if screenshot has been created OK. Otherwise task.wait...
 
 
-            });
         }
 
      
         private async Task Run()
         {
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
                 const string hostelastic = "http://172.17.1.88:9200";
                 string hostName = "172.17.1.41";
@@ -209,7 +211,7 @@ namespace parser4mails
                     {
                         this.Dispatcher.Invoke(() =>
                         {
-                    
+                          
                             progress.Text = i + " out of: " + client.Count + " emails processed. :)";
                         });
 
@@ -465,7 +467,9 @@ namespace parser4mails
                                             string potdomaila = "C:/inetpub/wwwroot/App_Data/pages/";
                                             System.IO.File.WriteAllText(potdomaila + messageId + ".html", content, Encoding.UTF8);
                                             string url = "https://emmares.com/SearchAPI/Get_File/" + messageId + "\n";
-
+                                           string urless = "http://emmares.com/SearchAPI/Get_File/" + messageId;
+                                            //
+                                            // WaitForCMD(urless, "C://Users//emmaresmvp//Desktop/cognifis.jpg", "null");
                                         }
 
                                         catch (Exception ex)
@@ -500,6 +504,9 @@ namespace parser4mails
                                         }
                                         this.Dispatcher.Invoke(() =>
                                         {
+                                            string urless = message.MessageId;
+                                            // WaitForCMD(urless, "C://Users//emmaresmvp//Desktop/cognifis.jpg", "null");
+                                            // testing async screenshot taking.
                                             numbering++;
                                             number.Text = numbering.ToString() + "/" + client.Count;
                                             dataForConfirmation.Add(new NameValueObjectList { subject = subject, excerpt = excerpt, messageId = messageId, addrfrom2 = addrfrom2, white_email = white_email, white_optin = white_optin, white_optout = white_optout, white_affiliate = white_affiliate, uID = uID, enddate = enddate, white_duration = white_duration });
