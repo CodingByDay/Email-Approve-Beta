@@ -26,7 +26,7 @@ namespace parser4mails
         private List<String> urls;
         private string filePathWrite = "C:/inetpub/wwwroot/python/Scraping/write.txt";
         private int page;
-        
+        private bool outcome;
 
         public MainWindow()
         {
@@ -123,6 +123,13 @@ namespace parser4mails
                 },
             };
         }
+        
+
+     
+
+
+
+
         // Finished application 2021 Janko 
         private void DeleteMessageByUID(string messageId)
         {
@@ -149,14 +156,61 @@ namespace parser4mails
                 client.Disconnect(true);
             }
         }
-
-
-        private void WaitForCMD(string Url, string FileName, string PathToPicture)
+        /// <summary>
+        /// Wait for it to work.
+        /// </summary>
+        /// <param name="Url"></param>
+        /// <param name="FileName"></param>
+        /// <param name="PathToPicture"></param>
+        /// <returns></returns>
+        async Task<bool> WaitForItToWork(string Url, string FileName, string PathToPicture)
         {
-            
+            bool succeeded = false;
+            while (!succeeded)
+            {
+
+                var argument = "C:\\Users\\emmaresmvp\\Desktop\\GetSiteThumbnail.exe" + " " + Url + " " + "C:\\Users\\emmaresmvp\\Desktop\\cognifis.jpg";
+                var final = "/C" + argument;
+                //var argument = @"/C C:\Users\emmaresmvp\Desktop\GetSiteThumbnail.exe" +Url + "C:/Users\\emmaresmvp\\Desktop\\cognifis.jpg 1280 1024 640 480";
+                System.Diagnostics.Process process = new System.Diagnostics.Process();
+                System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+                startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                startInfo.FileName = "cmd.exe";
+                startInfo.Arguments = final;
+                MessageBox.Show(final);
+                process.StartInfo = startInfo;
+                process.Start();
+
+
+                if (File.Exists(FileName))
+                {
+                    outcome = true;
+                }
+                else
+                {
+                    outcome = false;
+
+                }
+
+                                          // do work
+
+                    succeeded = outcome; // if it worked, make as succeeded, else retry
+                await Task.Delay(100000); // arbitrary delay
+            }
+
+
+
+            return succeeded;
+        }
+
+
+
+        private bool WaitForCMD(string Url, string FileName, string PathToPicture)
+        {
+             
                 //GetSiteThumbnail.exe http://www.cognifide.com/ cognifide.jpg 1280 1024 640 480
                 bool isScreenShotTaken = false;
-                var argument = "C:\\Users\\emmaresmvp\\Desktop\\GetSiteThumbnail.exe" + " " + Url +" "+ "C:\\Users\\emmaresmvp\\Desktop\\cognifis.jpg 1280 1024 640 480";
+                var argument = "C:\\Users\\emmaresmvp\\Desktop\\GetSiteThumbnail.exe" + " " + Url + " " + "C:\\Users\\emmaresmvp\\Desktop\\cognifis.jpg 1280 1024 640 480";
                 var final = "/C" + argument;
                 //var argument = @"/C C:\Users\emmaresmvp\Desktop\GetSiteThumbnail.exe" +Url + "C:/Users\\emmaresmvp\\Desktop\\cognifis.jpg 1280 1024 640 480";
                 System.Diagnostics.Process process = new System.Diagnostics.Process();
@@ -166,19 +220,17 @@ namespace parser4mails
                 startInfo.Arguments = final;
                 process.StartInfo = startInfo;
                 process.Start();
+            
 
 
+                if(File.Exists(PathToPicture))
+                {
+                return true;
+                } else
+                {
+                return false;
 
-                //if(File.Exists(PathToPicture))
-                //{
-                //    isScreenShotTaken = true;
-                //} else
-                //{
-                //    while (isScreenShotTaken == false) {
-                //        Task.Delay(1000);
-                //    };
-
-                //}
+                }
 
 
                 // browser exception url not found.
@@ -467,8 +519,15 @@ namespace parser4mails
                                             string potdomaila = "C:/inetpub/wwwroot/App_Data/pages/";
                                             System.IO.File.WriteAllText(potdomaila + messageId + ".html", content, Encoding.UTF8);
                                             string url = "https://emmares.com/SearchAPI/Get_File/" + messageId + "\n";
-                                           string urless = "http://emmares.com/SearchAPI/Get_File/" + messageId;
-                                            //
+                                            string urless = "http://emmares.com/SearchAPI/Get_File/" + messageId;
+                                          
+                                            WaitForItToWork(urless, message.MessageId, "test").Wait();
+                                            bool finaly = await WaitForItToWork(urless, message.MessageId, "Test");
+                                            while (finaly!=true)
+                                            {
+                                                Task.WaitAll();
+                                            }
+                                          
                                             // WaitForCMD(urless, "C://Users//emmaresmvp//Desktop/cognifis.jpg", "null");
                                         }
 
@@ -505,7 +564,8 @@ namespace parser4mails
                                         this.Dispatcher.Invoke(() =>
                                         {
                                             string urless = message.MessageId;
-                                            // WaitForCMD(urless, "C://Users//emmaresmvp//Desktop/cognifis.jpg", "null");
+                                            WaitForCMD(urless, "C://Users//emmaresmvp//Desktop/cognifis.jpg", "null");
+                                            
                                             // testing async screenshot taking.
                                             numbering++;
                                             number.Text = numbering.ToString() + "/" + client.Count;
