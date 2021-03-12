@@ -122,7 +122,7 @@ namespace parser4mails
                 },
             };
         }
-
+        // Finished application 2021 Janko 
         private void DeleteMessageByUID(string messageId)
         {
             string hostName = "172.17.1.41";
@@ -177,7 +177,6 @@ namespace parser4mails
                         //  MessageBox.Show(message.TextBody.Trim());
                         excerpt = "";
 
-
                         // update the ui thread asynchronously
 
                         //if (
@@ -202,8 +201,6 @@ namespace parser4mails
                         excerpt = Regex.Replace(excerpt, @"\r\n?|\n", " ");
                         excerpt = Regex.Replace(excerpt, "&#x10C;", "Č");
                         excerpt = Regex.Replace(excerpt, "&zwnj;", "");
-
-
                         /*string pattern0 = "(?<= style)(.*)(?= style)";
                         Regex rgx0 = new Regex(pattern0);
                         excerpt = rgx0.Replace(excerpt, "");*/
@@ -240,6 +237,7 @@ namespace parser4mails
                         excerpt = Regex.Replace(excerpt, @"\t", " ");
                         excerpt = Regex.Replace(excerpt, @"\r", " ");
                         excerpt = Regex.Replace(excerpt, @"\s+", " ");
+
                         if (subject != null)
                         {
                             subject = Regex.Replace(subject, "\"", "'");
@@ -248,7 +246,7 @@ namespace parser4mails
 
 
                         float score = 0.0F;
-
+                        // Exception handling.
                         var messageId = message.MessageId;
                         if (message.MessageId == null | message.Subject == null)
                         {
@@ -268,14 +266,11 @@ namespace parser4mails
                         var optout = "";
                         var affiliatelink = "";
                         var enddate = message.To.ToString();
-
                         string[] enddate1 = enddate.Split(new string[] { "-enddate-" }, StringSplitOptions.None);  //emmares-enddate-2019-06-06@emmares.com
                         string[] enddate2 = enddate1.Length > 1 ? enddate1[1].Split(new string[] { "@emmares" }, StringSplitOptions.None) : new string[] { DateTime.Today.AddYears(2).ToString("yyyy-MM-dd") };
                         //enddate = 2 leti od dneva vpisa
                         enddate = enddate2[0]; //"2019-12-09";
-
                         string content = !string.IsNullOrEmpty(message.HtmlBody) ? message.HtmlBody : message.TextBody;
-
                         //addr "n" <n@n.com> -> n@n.com
                         //
                         string addrfrom2 = addrfrom.ToString();
@@ -306,8 +301,6 @@ namespace parser4mails
 
                             }
                         }
-
-
                         //
                         string mailelastic = "";
                         /*WebClient wc = new WebClient();
@@ -338,11 +331,9 @@ namespace parser4mails
                         {
                             mailelastic2 = "Error";
                         }
-
                         try
                         {
                             var xblacklist = Newtonsoft.Json.JsonConvert.DeserializeObject(mailelastic);
-
                             var emailclass = new Emailclass();
                             emailclass = JsonConvert.DeserializeObject<Emailclass>(mailelastic);
 
@@ -353,7 +344,7 @@ namespace parser4mails
                             }
                             else
                             {
-                                //  MessageBox.Show(Regex.Replace(excerpt, @"\r\n?|\n", " "));
+                                // MessageBox.Show(Regex.Replace(excerpt, @"\r\n?|\n", " "));
                                 try
                                 {
                                     var xwhitelist = Newtonsoft.Json.JsonConvert.DeserializeObject(mailelastic2);
@@ -414,10 +405,10 @@ namespace parser4mails
                                     if (emailclass2.Hits.Total != 0 && emailclass2.Hits.HitsHits[0].Source?.Publish == "true")
                                     {
                                         // MessageBox.Show("ta mail je na whitelisti " + emailclass2.Hits.HitsHits[0]?.Source.Email.ToString()); //.Query.Term.Email.ToString());
-                                        //upload to elasticsearch
+                                        // upload to elasticsearch
                                         if (emailclass2.Hits.HitsHits[0].Source?.Duration != null)
                                             enddate = DateTime.Today.AddDays(Convert.ToDouble(emailclass2.Hits.HitsHits[0].Source?.Duration)).ToString("yyyy-MM-dd");
-                                        //MessageBox.Show("main enddate " + enddate);
+                                        // MessageBox.Show("main enddate " + enddate);
                                         // MessageBox.Show(emailclass2.Hits.HitsHits[0].Source.Email + " o " + emailclass2.Hits.HitsHits[0].Source.Optin + " p " + emailclass2.Hits.HitsHits[0].Source.Publish);
                                         string jsonbody = "{ \"subject\" : \"" + subject + "\", \"addrfrom\" : \"" + addrfrom2 + "\", \"excerpt\" : \"" + excerpt + "\", \"score\" : \"0.0\", \"messageid\" : \"" + messageId + "\", \"preview\" : \"!!!preview!!!\", \"campaignname\" : \"Campaign name\", \"descriptionofcampaign\" : \"Description of campaign\", \"publisher\" : \"publisher1\", \"fieldofinterest\" : \"News\", \"region\" : \"Europe\", \"contenttype\" : \"Newsletter\", \"optin\" : \"" + emailclass2.Hits.HitsHits[0]?.Source.Optin + "\", \"optout\" : \"" + emailclass2.Hits.HitsHits[0]?.Source.Optout + "\", \"affiliatelink\" : \"" + emailclass2.Hits.HitsHits[0]?.Source.Affiliatelink + "\", \"enddate\" : \"" + enddate + "\", \"date\" : \"" + todaysdate + "\" }   ";
                                         WebClient wc4 = new WebClient();
@@ -430,12 +421,7 @@ namespace parser4mails
                                             DeleteMessageByUID(uID);
                                             string potdomaila = "C:/inetpub/wwwroot/App_Data/pages/";
                                             System.IO.File.WriteAllText(potdomaila + messageId + ".html", content, Encoding.UTF8);
-                                            string filePath = "C:/inetpub/wwwroot/python/Scraping/newEmails.txt";
-
                                             string url = "https://emmares.com/SearchAPI/Get_File/" + messageId + "\n";
-
-                                            
-
 
                                         }
 
@@ -450,14 +436,8 @@ namespace parser4mails
                                     else
                                     {
                                         string potdomaila = "C:/inetpub/wwwroot/App_Data/pages/";
-                                        //https://emmares.com/SearchAPI/Get_File/+ url
-                                        string filePath = "C:/inetpub/wwwroot/python/Scraping/newEmails.txt";
-
+                                        System.IO.File.WriteAllText(potdomaila + messageId + ".html", content, Encoding.UTF8);
                                         string url = "https://emmares.com/SearchAPI/Get_File/" + messageId + "\n";
-
-
-
-
                                         // MessageBox.Show("To je nov mail, ni na nobeni list ali pa je na whitelisti ampak se še ne objavi avtomatsko");
                                         string white_email = "";
                                         string white_optin = "";
@@ -482,7 +462,7 @@ namespace parser4mails
                                             dataForConfirmation.Add(new NameValueObjectList { subject = subject, excerpt = excerpt, messageId = messageId, addrfrom2 = addrfrom2, white_email = white_email, white_optin = white_optin, white_optout = white_optout, white_affiliate = white_affiliate, uID = uID, enddate = enddate, white_duration = white_duration });
 
                                             // Window mailwindow = new mailwindow(subject, excerpt, messageId, addrfrom2, white_email, white_optin, white_optout, white_affiliate, uID, enddate, white_duration);
-                                            //Mailwindow.ShowDialog();
+                                            // Mailwindow.ShowDialog();
                                         });
 
                                     }

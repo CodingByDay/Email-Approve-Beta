@@ -98,7 +98,6 @@ namespace parser4mails
         {
             InitializeComponent();
 
-            numberOfEmails.Text = MainWindow.dataForConfirmation.Count().ToString() + " mailov za odobrit/odstranit."; 
             zadeva_label.Content = subject;
             string potdomaila = "C:/inetpub/wwwroot/App_Data/pages/";
             string emaillink = potdomaila + messageId + ".html";
