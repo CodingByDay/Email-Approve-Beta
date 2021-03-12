@@ -35,7 +35,7 @@ namespace parser4mails
             bool useSsl = false;
             string userName = "publish@emmares";
             string password = "publish123!";
-
+           // Testing stuff.
             Mails_number.Content = "0";
             using (var client = new Pop3Client())
             {
@@ -149,6 +149,48 @@ namespace parser4mails
             }
         }
 
+
+        private async Task WaitForCMD(string fileName, string PathToPicture)
+        {
+            await Task.Run(() =>
+            {
+                bool isScreenShotTaken = false;
+                var argument = @"/C C:\Users\emmaresmvp\Desktop\GetSiteThumbnail.exe ";
+                System.Diagnostics.Process process = new System.Diagnostics.Process();
+                System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+                startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                startInfo.FileName = "cmd.exe";
+                startInfo.Arguments = argument;
+                process.StartInfo = startInfo;
+                process.Start();
+
+
+
+                if(File.Exists(PathToPicture))
+                {
+                    isScreenShotTaken = true;
+                } else
+                {
+                    while (isScreenShotTaken == false) {
+                        Task.Delay(1000);
+                    };
+
+                }
+
+
+                // browser exception url not found.
+
+
+                // say yes to popups
+
+
+                // if screenshot has been created OK. Otherwise task.wait...
+
+
+            });
+        }
+
+     
         private async Task Run()
         {
             await Task.Run(() =>
@@ -167,6 +209,7 @@ namespace parser4mails
                     {
                         this.Dispatcher.Invoke(() =>
                         {
+                    
                             progress.Text = i + " out of: " + client.Count + " emails processed. :)";
                         });
 
