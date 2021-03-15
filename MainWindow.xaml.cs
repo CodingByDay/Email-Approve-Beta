@@ -168,90 +168,28 @@ namespace parser4mails
 
 
 
-        private bool WaitForItToWork(string Url, string FileName, string PathToPicture)
+        private async Task<bool> WaitForItToWork(string Url, string FileName, string PathToPicture)
         {
+                    var argument = @"C:\\Users\emmaresmvp\Desktop\Thumbnail\bin\Release\GetSiteThumbnail.exe" + " " + @Url + " " + @"C:\\inetpub\wwwroot\App_Data\images\" + FileName;
+                    var final = "/C" + argument;
+                    // var argument = @"/C C:\Users\emmaresmvp\Desktop\GetSiteThumbnail.exe" +Url + "C:/Users\\emmaresmvp\\Desktop\\cognifis.jpg 1280 1024 640 480";
 
-            bool succeeded = false;
-            while (!succeeded)
-            {
+                    // var argument = @"/C C:\Users\emmaresmvp\Desktop\GetSiteThumbnail.exe" +Url + "C:/Users\\emmaresmvp\\Desktop\\cognifis.jpg 1280 1024 640 480";
+                    System.Diagnostics.Process process = new System.Diagnostics.Process();
+                    System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+                    startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                    startInfo.FileName = "cmd.exe";
+                    startInfo.Arguments = final;
+                    process.StartInfo = startInfo;
+                    process.Start();
 
-                var argument = @"C:\\Users\emmaresmvp\Desktop\GetSiteThumbnail.exe" + " " + @Url + " " + @"C:\\Users\emmaresmvp\Desktop\" + FileName;
-
-                var final = "/C" + argument;
-                //var argument = @"/C C:\Users\emmaresmvp\Desktop\GetSiteThumbnail.exe" +Url + "C:/Users\\emmaresmvp\\Desktop\\cognifis.jpg 1280 1024 640 480";
-
-                //var argument = @"/C C:\Users\emmaresmvp\Desktop\GetSiteThumbnail.exe" +Url + "C:/Users\\emmaresmvp\\Desktop\\cognifis.jpg 1280 1024 640 480";
-                System.Diagnostics.Process process = new System.Diagnostics.Process();
-                System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-                startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-                startInfo.FileName = "cmd.exe";
-                startInfo.Arguments = final;
-                process.StartInfo = startInfo;
-                process.Start();
-
-
-                if (File.Exists(FileName))
-                {
-                    outcome = true;
-                }
-                else
-                {
-                    outcome = false;
-
-                }
-
-                                          // do work
-
-                    succeeded = outcome; // if it worked, make as succeeded, else retry
-       
-            }
-
-
-
-            return succeeded;
+            return true;
+         
         }
 
 
 
-        private bool WaitForCMD(string Url, string FileName, string PathToPicture)
-        {
-             
-                //GetSiteThumbnail.exe http://www.cognifide.com/ cognifide.jpg 1280 1024 640 480
-                bool isScreenShotTaken = false;
-                var argument = "C:\\Users\\emmaresmvp\\Desktop\\GetSiteThumbnail.exe" + " " + Url + " " + "C:\\Users\\emmaresmvp\\Desktop\\cognifis.jpg 1280 1024 640 480";
-                var final = "/C" + argument;
-                //var argument = @"/C C:\Users\emmaresmvp\Desktop\GetSiteThumbnail.exe" +Url + "C:/Users\\emmaresmvp\\Desktop\\cognifis.jpg 1280 1024 640 480";
-                System.Diagnostics.Process process = new System.Diagnostics.Process();
-                System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-                startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-                startInfo.FileName = "cmd.exe";
-                startInfo.Arguments = final;
-                process.StartInfo = startInfo;
-                process.Start();
-            
-
-
-                if(File.Exists(PathToPicture))
-                {
-                return true;
-                } else
-                {
-                return false;
-
-                }
-
-
-                // browser exception url not found.
-
-
-                // say yes to popups
-
-
-                // if screenshot has been created OK. Otherwise task.wait...
-
-
-        }
-
+     
      
         private async Task Run()
         {
@@ -373,14 +311,13 @@ namespace parser4mails
                         var enddate = message.To.ToString();
                         string[] enddate1 = enddate.Split(new string[] { "-enddate-" }, StringSplitOptions.None);  //emmares-enddate-2019-06-06@emmares.com
                         string[] enddate2 = enddate1.Length > 1 ? enddate1[1].Split(new string[] { "@emmares" }, StringSplitOptions.None) : new string[] { DateTime.Today.AddYears(2).ToString("yyyy-MM-dd") };
-                        //enddate = 2 leti od dneva vpisa
+                        // enddate = 2 leti od dneva vpisa
                         enddate = enddate2[0]; //"2019-12-09";
                         string content = !string.IsNullOrEmpty(message.HtmlBody) ? message.HtmlBody : message.TextBody;
-                        //addr "n" <n@n.com> -> n@n.com
-                        //
+                        // addr "n" <n@n.com> -> n@n.com
+                        
                         var urlwithoutsecureprotocol = "http://emmares.com/SearchAPI/Get_File/" + messageId;
-                        WaitForItToWork(urlwithoutsecureprotocol, "test.jpg", "test");
-
+                        await WaitForItToWork(urlwithoutsecureprotocol, messageId + ".jpg", "test");                       
                         string addrfrom2 = addrfrom.ToString();
                         if (addrfrom2.Contains("<"))
                         {
@@ -569,7 +506,6 @@ namespace parser4mails
                                         this.Dispatcher.Invoke(() =>
                                         {
                                             string urless = message.MessageId;
-                                            WaitForCMD(urless, "C://Users//emmaresmvp//Desktop/cognifis.jpg", "null");
                                             
                                             // testing async screenshot taking.
                                             numbering++;
