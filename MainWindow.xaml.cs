@@ -163,21 +163,29 @@ namespace parser4mails
         /// <param name="FileName"></param>
         /// <param name="PathToPicture"></param>
         /// <returns></returns>
-        async Task<bool> WaitForItToWork(string Url, string FileName, string PathToPicture)
+        /// 
+
+
+
+
+        private bool WaitForItToWork(string Url, string FileName, string PathToPicture)
         {
+
             bool succeeded = false;
             while (!succeeded)
             {
 
-                var argument = "C:\\Users\\emmaresmvp\\Desktop\\GetSiteThumbnail.exe" + " " + Url + " " + "C:\\Users\\emmaresmvp\\Desktop\\cognifis.jpg";
+                var argument = @"C:\\Users\emmaresmvp\Desktop\GetSiteThumbnail.exe" + " " + @Url + " " + @"C:\\Users\emmaresmvp\Desktop\" + FileName;
+
                 var final = "/C" + argument;
+                //var argument = @"/C C:\Users\emmaresmvp\Desktop\GetSiteThumbnail.exe" +Url + "C:/Users\\emmaresmvp\\Desktop\\cognifis.jpg 1280 1024 640 480";
+
                 //var argument = @"/C C:\Users\emmaresmvp\Desktop\GetSiteThumbnail.exe" +Url + "C:/Users\\emmaresmvp\\Desktop\\cognifis.jpg 1280 1024 640 480";
                 System.Diagnostics.Process process = new System.Diagnostics.Process();
                 System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
                 startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
                 startInfo.FileName = "cmd.exe";
                 startInfo.Arguments = final;
-                MessageBox.Show(final);
                 process.StartInfo = startInfo;
                 process.Start();
 
@@ -195,7 +203,7 @@ namespace parser4mails
                                           // do work
 
                     succeeded = outcome; // if it worked, make as succeeded, else retry
-                await Task.Delay(100000); // arbitrary delay
+       
             }
 
 
@@ -370,6 +378,9 @@ namespace parser4mails
                         string content = !string.IsNullOrEmpty(message.HtmlBody) ? message.HtmlBody : message.TextBody;
                         //addr "n" <n@n.com> -> n@n.com
                         //
+                        var urlwithoutsecureprotocol = "http://emmares.com/SearchAPI/Get_File/" + messageId;
+                        WaitForItToWork(urlwithoutsecureprotocol, "test.jpg", "test");
+
                         string addrfrom2 = addrfrom.ToString();
                         if (addrfrom2.Contains("<"))
                         {
@@ -520,14 +531,8 @@ namespace parser4mails
                                             System.IO.File.WriteAllText(potdomaila + messageId + ".html", content, Encoding.UTF8);
                                             string url = "https://emmares.com/SearchAPI/Get_File/" + messageId + "\n";
                                             string urless = "http://emmares.com/SearchAPI/Get_File/" + messageId;
-                                          
-                                            WaitForItToWork(urless, message.MessageId, "test").Wait();
-                                            bool finaly = await WaitForItToWork(urless, message.MessageId, "Test");
-                                            while (finaly!=true)
-                                            {
-                                                Task.WaitAll();
-                                            }
-                                          
+                                            // bool result =  WaitForItToWork(urless, messageId, "test");        
+
                                             // WaitForCMD(urless, "C://Users//emmaresmvp//Desktop/cognifis.jpg", "null");
                                         }
 
