@@ -16,6 +16,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using parser4mails;
+using System.Threading;
+
 namespace parser4mails
 {
     /// <summary>
@@ -84,7 +86,6 @@ namespace parser4mails
 
     public partial class mailwindow : Window
     {
-
         public string MyTextData { get; set; }
         public string subject_p = "";
         public string excerpt_p = "";
@@ -190,10 +191,14 @@ namespace parser4mails
             }
             catch(Exception ex)
             {
-                MessageBox.Show("ERROR:" + ex.ToString() + "  HOST:" + hostelastic);
+               MessageBox.Show("ERROR:" + ex.ToString() + "  HOST:" + hostelastic);
             }
         }
-
+        private void waitForExecution()
+        {
+            Thread.Sleep(3000);
+            Objavi_btn_Click(this, null);
+        }
         private void Optin_btn_Click(object sender, RoutedEventArgs e)
         {
             //update opt in on elasticsearch whitelist
@@ -210,7 +215,7 @@ namespace parser4mails
                 
                 emailclass = JsonConvert.DeserializeObject<Emailclass>(mailelastic);
                 index = emailclass.Hits.HitsHits[0].Id;
-               // index = emailclass.Hits.ToString(); 
+                index = emailclass.Hits.ToString(); 
             }
             catch(Exception ex)
             {
@@ -231,7 +236,7 @@ namespace parser4mails
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Url update:" + urlupdate + "***********************" + "   Json2: " + json2 + "***********************" + ex.ToString());
+         MessageBox.Show("Url update:" + urlupdate + "***********************" + "   Json2: " + json2 + "***********************" + ex.ToString());
             }
         }
 
@@ -268,7 +273,7 @@ namespace parser4mails
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+           MessageBox.Show(ex.ToString());
             }
         }
 
@@ -305,7 +310,8 @@ namespace parser4mails
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+             MessageBox.Show(ex.ToString());
+                
             }
         }
 
@@ -370,7 +376,7 @@ namespace parser4mails
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error on uploading to es (mail)" + ex);
+              MessageBox.Show("Error on uploading to es (mail)" + ex);
             }
 
             this.Close();
@@ -414,6 +420,7 @@ namespace parser4mails
             }
             catch (Exception ex)
             {
+                this.Close();
                 MessageBox.Show(ex.ToString());
             }
 
@@ -529,6 +536,7 @@ namespace parser4mails
             }
             catch (Exception ex)
             {
+                this.Close();
                 MessageBox.Show(ex.ToString());
             }
         }

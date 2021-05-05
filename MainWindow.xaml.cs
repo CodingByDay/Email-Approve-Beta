@@ -20,6 +20,8 @@ namespace parser4mails
     /// </summary>
     public partial class MainWindow : Window
     {
+        public event EventHandler ButtonFirstFormClicked;
+
         private string excerpt;
         public static List<NameValueObjectList> dataForConfirmation = new List<NameValueObjectList>();
         private int numbering = 0;
@@ -27,10 +29,12 @@ namespace parser4mails
         private string filePathWrite = "C:/inetpub/wwwroot/python/Scraping/write.txt";
         private int page;
         private bool outcome;
+        private RoutedEvent e;
 
         public MainWindow()
         {
-            InitializeComponent();
+            dataForConfirmation.Clear();
+             InitializeComponent();
             string hostName = "172.17.1.41";
             int port = 110;
             bool useSsl = false;
@@ -229,7 +233,7 @@ namespace parser4mails
                         //} else {
                         //    excerpt = message.TextBody.Trim();
                         //        }
-
+                        var debug = message.TextBody;
                         if (message.TextBody == null)
                         {
                             excerpt = message.HtmlBody.Trim();
@@ -333,7 +337,7 @@ namespace parser4mails
                             {
                                 var addressuri = "https://emmares.com/SearchAPI/SaveToDB?";
                                 var datacidaddr = "CampaignID=" + cid + "&Sender_Email=" + addrfrom2;
-                                //string method = "POST";
+                                string method = "POST";
                                 savetodb.DownloadString(addressuri + datacidaddr);
                             }
                             catch (Exception ex)
@@ -384,12 +388,12 @@ namespace parser4mails
 
                             if (emailclass.Hits.Total != 0)
                             {
-                                // MessageBox.Show("ta mail je na blacklisti " + emailclass.Hits.HitsHits[0]?.Source.Email.ToString()); //.Query.Term.Email.ToString());
+                                 MessageBox.Show("ta mail je na blacklisti " + emailclass.Hits.HitsHits[0]?.Source.Email.ToString()); //.Query.Term.Email.ToString());
                                 DeleteMessageByUID(uID);
                             }
                             else
                             {
-                                // MessageBox.Show(Regex.Replace(excerpt, @"\r\n?|\n", " "));
+                                 MessageBox.Show(Regex.Replace(excerpt, @"\r\n?|\n", " "));
                                 try
                                 {
                                     var xwhitelist = Newtonsoft.Json.JsonConvert.DeserializeObject(mailelastic2);
@@ -450,32 +454,31 @@ namespace parser4mails
                                     if (emailclass2.Hits.Total != 0 && emailclass2.Hits.HitsHits[0].Source?.Publish == "true")
                                     {
                                         // MessageBox.Show("ta mail je na whitelisti " + emailclass2.Hits.HitsHits[0]?.Source.Email.ToString()); //.Query.Term.Email.ToString());
-                                        // upload to elasticsearch
+                                        //upload to elasticsearch
                                         if (emailclass2.Hits.HitsHits[0].Source?.Duration != null)
                                             enddate = DateTime.Today.AddDays(Convert.ToDouble(emailclass2.Hits.HitsHits[0].Source?.Duration)).ToString("yyyy-MM-dd");
-                                        // MessageBox.Show("main enddate " + enddate);
+                                        //MessageBox.Show("main enddate " + enddate);
+                                        excerpt = excerpt.Replace(" ", string.Empty);
                                         // MessageBox.Show(emailclass2.Hits.HitsHits[0].Source.Email + " o " + emailclass2.Hits.HitsHits[0].Source.Optin + " p " + emailclass2.Hits.HitsHits[0].Source.Publish);
-                                        string jsonbody = "{ \"subject\" : \"" + subject + "\", \"addrfrom\" : \"" + addrfrom2 + "\", \"excerpt\" : \"" + excerpt + "\", \"score\" : \"0.0\", \"messageid\" : \"" + messageId + "\", \"preview\" : \"!!!preview!!!\", \"campaignname\" : \"Campaign name\", \"descriptionofcampaign\" : \"Description of campaign\", \"publisher\" : \"publisher1\", \"fieldofinterest\" : \"News\", \"region\" : \"Europe\", \"contenttype\" : \"Newsletter\", \"optin\" : \"" + emailclass2.Hits.HitsHits[0]?.Source.Optin + "\", \"optout\" : \"" + emailclass2.Hits.HitsHits[0]?.Source.Optout + "\", \"affiliatelink\" : \"" + emailclass2.Hits.HitsHits[0]?.Source.Affiliatelink + "\", \"enddate\" : \"" + enddate + "\", \"date\" : \"" + todaysdate + "\" }   ";
+                                        string jsonbody = "{ \"subject\" : \"" + subject + "\", \"addrfrom\" : \"" + addrfrom2 + "\", \"excerpt\" : \"" + excerpt.Replace(" ", string.Empty).Substring(0,300) + "\", \"score\" : \"0.0\", \"messageid\" : \"" + messageId + "\", \"preview\" : \"!!!preview!!!\", \"campaignname\" : \"Campaign name\", \"descriptionofcampaign\" : \"Description of campaign\", \"publisher\" : \"publisher1\", \"fieldofinterest\" : \"News\", \"region\" : \"Europe\", \"contenttype\" : \"Newsletter\", \"optin\" : \"" + emailclass2.Hits.HitsHits[0]?.Source.Optin + "\", \"optout\" : \"" + emailclass2.Hits.HitsHits[0]?.Source.Optout + "\", \"affiliatelink\" : \"" + emailclass2.Hits.HitsHits[0]?.Source.Affiliatelink + "\", \"enddate\" : \"" + enddate + "\", \"date\" : \"" + todaysdate + "\" }";
+                                     
                                         WebClient wc4 = new WebClient();
                                         wc4.Encoding = Encoding.UTF8;
+                                        
                                         wc4.Headers.Add("Content-Type", "application/json");
                                         try
                                         {
+                                            var debug2 = hostelastic + "/emmares_search_test/_doc/" + jsonbody;
                                             wc4.UploadString(hostelastic + "/emmares_search_test/_doc", jsonbody);
+                                            
                                             //delete from pop
                                             DeleteMessageByUID(uID);
                                             string potdomaila = "C:/inetpub/wwwroot/App_Data/pages/";
                                             System.IO.File.WriteAllText(potdomaila + messageId + ".html", content, Encoding.UTF8);
-                                            string url = "https://emmares.com/SearchAPI/Get_File/" + messageId + "\n";
-                                            string urless = "http://emmares.com/SearchAPI/Get_File/" + messageId;
-                                            // bool result =  WaitForItToWork(urless, messageId, "test");        
-
-                                            // WaitForCMD(urless, "C://Users//emmaresmvp//Desktop/cognifis.jpg", "null");
                                         }
-
                                         catch (Exception ex)
                                         {
-                                            // MessageBox.Show("Error on uploading to es (Main) " + ex);
+                                            MessageBox.Show("Error on uploading to es (Main) " + ex);
                                             string logerror = "C:/inetpub/wwwroot/App_Data/errors/";
                                             System.IO.File.WriteAllText(logerror + messageId + ".txt", jsonbody, Encoding.UTF8);
                                         }
@@ -486,13 +489,13 @@ namespace parser4mails
                                         string potdomaila = "C:/inetpub/wwwroot/App_Data/pages/";
                                         System.IO.File.WriteAllText(potdomaila + messageId + ".html", content, Encoding.UTF8);
                                         string url = "https://emmares.com/SearchAPI/Get_File/" + messageId + "\n";
-                                        // MessageBox.Show("To je nov mail, ni na nobeni list ali pa je na whitelisti ampak se še ne objavi avtomatsko");
+                                        MessageBox.Show("To je nov mail, ni na nobeni list ali pa je na whitelisti ampak se še ne objavi avtomatsko");
                                         string white_email = "";
                                         string white_optin = "";
                                         string white_optout = "";
                                         string white_affiliate = "";
                                         string white_duration = "730";
-                                        //string white_publish = "false";
+                                        // string white_publish = "false";
 
                                         if (emailclass2.Hits.Total != 0)
                                         {
@@ -507,13 +510,16 @@ namespace parser4mails
                                         {
                                             string urless = message.MessageId;
                                             
-                                            // testing async screenshot taking.
+                                            // Testing async screenshot taking.
                                             numbering++;
                                             number.Text = numbering.ToString() + "/" + client.Count;
                                             dataForConfirmation.Add(new NameValueObjectList { subject = subject, excerpt = excerpt, messageId = messageId, addrfrom2 = addrfrom2, white_email = white_email, white_optin = white_optin, white_optout = white_optout, white_affiliate = white_affiliate, uID = uID, enddate = enddate, white_duration = white_duration });
 
-                                            // Window mailwindow = new mailwindow(subject, excerpt, messageId, addrfrom2, white_email, white_optin, white_optout, white_affiliate, uID, enddate, white_duration);
+                                            // mailwindow Mailwindow = new mailwindow(subject, excerpt, messageId, addrfrom2, white_email, white_optin, white_optout, white_affiliate, uID, enddate, white_duration);
                                             // Mailwindow.ShowDialog();
+                                            // Mailwindow.Objavi_btn_Click(this, null);
+
+
                                         });
 
                                     }
@@ -523,7 +529,7 @@ namespace parser4mails
                                 {
                                     this.Dispatcher.Invoke(() =>
                                     {
-                                        MessageBox.Show("messageId: " + messageId + "Error on whitelist: " + ex.ToString());
+                                      
                                     });
 
 
@@ -534,7 +540,7 @@ namespace parser4mails
                         {
                             this.Dispatcher.Invoke(() =>
                             {
-                                MessageBox.Show("Error on whitelist");
+                              
                             });
 
                         }
@@ -570,9 +576,9 @@ namespace parser4mails
                             var x = dataForConfirmation[i];
 
                             Window mailwindow = new mailwindow(x.subject, x.excerpt, x.messageId, x.addrfrom2, x.white_email, x.white_optin, x.white_optout, x.white_affiliate, x.uID, x.enddate, x.white_duration);
-                            mailwindow.ShowDialog();
-                            page = i;
-                            mailwindow.Closed += Mailwindow_Closed;
+                           mailwindow.ShowDialog();
+                           page = i;
+                           mailwindow.Closed += Mailwindow_Closed;
 
                         });
                     }

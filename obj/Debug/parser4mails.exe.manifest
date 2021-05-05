@@ -55,6 +55,18 @@
     </dependentAssembly>
   </dependency>
   <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Elasticsearch.Net.dll" size="900096">
+      <assemblyIdentity name="Elasticsearch.Net" version="7.0.0.0" publicKeyToken="96C599BBE3E70F5D" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>M6QEQr+GeTVFfQunoiQsuwNcXiAOcfGQ9vVBX5RB8s8=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="HtmlAgilityPack.dll" size="165888">
       <assemblyIdentity name="HtmlAgilityPack" version="1.11.30.0" publicKeyToken="BD319B19EAF3B43A" language="neutral" processorArchitecture="msil" />
       <hash>
@@ -91,6 +103,18 @@
     </dependentAssembly>
   </dependency>
   <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Nest.dll" size="4861440">
+      <assemblyIdentity name="Nest" version="7.0.0.0" publicKeyToken="96C599BBE3E70F5D" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>5zIVLS2iZoZTjKr2Kju/jnNxxAJEUHg5Hh86oKHBF3I=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Newtonsoft.Json.dll" size="700336">
       <assemblyIdentity name="Newtonsoft.Json" version="12.0.0.0" publicKeyToken="30AD4FE6B2A6AEED" language="neutral" processorArchitecture="msil" />
       <hash>
@@ -115,14 +139,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="parser4mails.exe" size="439296">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="parser4mails.exe" size="440320">
       <assemblyIdentity name="parser4mails" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>HaTeHfMbl3zMP8OwP6Iie3mvVwRohV1mKZAk6ahuP4g=</dsig:DigestValue>
+        <dsig:DigestValue>8cloGRXtqiZ8+OIqzXgJp3LkibhEozYffqwR2jxlyFw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -138,6 +162,54 @@
       </hash>
     </dependentAssembly>
   </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="System.Diagnostics.DiagnosticSource.dll" size="98184">
+      <assemblyIdentity name="System.Diagnostics.DiagnosticSource" version="5.0.0.0" publicKeyToken="CC7B13FFCD2DDD51" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>WZp50llY6uZV3a5zN0d9FuvE8BO2iWu9YHGchbN9uIw=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="System.Memory.dll" size="141184">
+      <assemblyIdentity name="System.Memory" version="4.0.1.1" publicKeyToken="CC7B13FFCD2DDD51" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>jnYxjosGaSq/fasRadJ9FVV/fwo002r2Rj7/D+ISE8c=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="System.Numerics.Vectors.dll" size="115856">
+      <assemblyIdentity name="System.Numerics.Vectors" version="4.1.4.0" publicKeyToken="B03F5F7F11D50A3A" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>HT74aYKB589zcdFVSv71hys5+Wwm2nciEKM9oEG6EYM=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="System.Runtime.CompilerServices.Unsafe.dll" size="16768">
+      <assemblyIdentity name="System.Runtime.CompilerServices.Unsafe" version="5.0.0.0" publicKeyToken="B03F5F7F11D50A3A" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>PK3La4pzNRQcfDV6HXevH/SbWbhy30lPUCVYAZHRwNU=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
   <file name="icon.ico" size="193222">
     <hash>
       <dsig:Transforms>
@@ -147,13 +219,13 @@
       <dsig:DigestValue>QnQ9R7ApZqwyo7KYPmCdD4Jl6J/8pC6+0tJSIwnvrf8=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="parser4mails.exe.config" size="779">
+  <file name="parser4mails.exe.config" size="1041">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>b2fxuGxe/JRRV8yNNEAbvGnBRrtZ8qQ51ZpHRKMxTaw=</dsig:DigestValue>
+      <dsig:DigestValue>MUgXdMPhL65UrGdv+cC/zOVEnNgn+0hShqqqbn8AFxA=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>
