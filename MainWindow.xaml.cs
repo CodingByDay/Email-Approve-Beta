@@ -388,12 +388,13 @@ namespace parser4mails
 
                             if (emailclass.Hits.Total != 0)
                             {
-                                 MessageBox.Show("ta mail je na blacklisti " + emailclass.Hits.HitsHits[0]?.Source.Email.ToString()); //.Query.Term.Email.ToString());
+                               //  MessageBox.Show("ta mail je na blacklisti " + emailclass.Hits.HitsHits[0]?.Source.Email.ToString()); //.Query.Term.Email.ToString());
                                 DeleteMessageByUID(uID);
                             }
                             else
                             {
-                                 MessageBox.Show(Regex.Replace(excerpt, @"\r\n?|\n", " "));
+                                //
+                                //MessageBox.Show(Regex.Replace(excerpt, @"\r\n?|\n", " "));
                                 try
                                 {
                                     var xwhitelist = Newtonsoft.Json.JsonConvert.DeserializeObject(mailelastic2);
@@ -478,7 +479,7 @@ namespace parser4mails
                                         }
                                         catch (Exception ex)
                                         {
-                                            MessageBox.Show("Error on uploading to es (Main) " + ex);
+                                          //  MessageBox.Show("Error on uploading to es (Main) " + ex);
                                             string logerror = "C:/inetpub/wwwroot/App_Data/errors/";
                                             System.IO.File.WriteAllText(logerror + messageId + ".txt", jsonbody, Encoding.UTF8);
                                         }
@@ -489,7 +490,7 @@ namespace parser4mails
                                         string potdomaila = "C:/inetpub/wwwroot/App_Data/pages/";
                                         System.IO.File.WriteAllText(potdomaila + messageId + ".html", content, Encoding.UTF8);
                                         string url = "https://emmares.com/SearchAPI/Get_File/" + messageId + "\n";
-                                        MessageBox.Show("To je nov mail, ni na nobeni list ali pa je na whitelisti ampak se še ne objavi avtomatsko");
+                                        //MessageBox.Show("To je nov mail, ni na nobeni list ali pa je na whitelisti ampak se še ne objavi avtomatsko");
                                         string white_email = "";
                                         string white_optin = "";
                                         string white_optout = "";
@@ -586,7 +587,7 @@ namespace parser4mails
                     {
                         this.Dispatcher.Invoke(() =>
                         {
-                            MessageBox.Show(ex.ToString());
+                          //  MessageBox.Show(ex.ToString());
                         });
 
 

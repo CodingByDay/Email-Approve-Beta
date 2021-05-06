@@ -215,7 +215,7 @@ namespace parser4mails
                 
                 emailclass = JsonConvert.DeserializeObject<Emailclass>(mailelastic);
                 index = emailclass.Hits.HitsHits[0].Id;
-                index = emailclass.Hits.ToString(); 
+                
             }
             catch(Exception ex)
             {
@@ -228,10 +228,11 @@ namespace parser4mails
             WebClient wc2 = new WebClient();
             wc2.Encoding = Encoding.UTF8;
             wc2.Headers.Add("Content-Type", "application/json");
-            string urlupdate = hostelastic + "/whitelist/_doc/" + index + "/_update";
+            string urlupdate = hostelastic + "/whitelist/_doc/" + index.ToString() + "/_update";
 
             try
             {
+                var debug = urlupdate + json2;
                 mailelastic2 = wc2.UploadString(urlupdate, json2); // whitelist/_doc/GnRyDWsBFWWaSa5YP7VY/_update
             }
             catch (Exception ex)
@@ -273,7 +274,7 @@ namespace parser4mails
             }
             catch (Exception ex)
             {
-           MessageBox.Show(ex.ToString());
+         //  MessageBox.Show(ex.ToString());
             }
         }
 
@@ -310,7 +311,7 @@ namespace parser4mails
             }
             catch (Exception ex)
             {
-             MessageBox.Show(ex.ToString());
+       //      MessageBox.Show(ex.ToString());
                 
             }
         }
@@ -354,15 +355,15 @@ namespace parser4mails
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+            //    MessageBox.Show(ex.ToString());
             }
 
             string todaysdate = DateTime.Today.ToString("yyyy-MM-dd");
             if (duration_tbox.Text != "")
                 enddate_p = DateTime.Today.AddDays(Convert.ToDouble(duration_tbox.Text)).ToString("yyyy-MM-dd");
-
+            excerpt_p = excerpt_p.Replace(" ", string.Empty);
             //add mail to elasticsearch
-            string jsonbody = "{ \"subject\" : \"" + subject_p + "\", \"addrfrom\" : \"" + addrfrom_p + "\", \"excerpt\" : \"" + excerpt_p + "\", \"score\" : \"0.0\", \"messageid\" : \"" + messageId_p + "\", \"preview\" : \"!!!preview!!!\", \"campaignname\" : \"Campaign name\", \"descriptionofcampaign\" : \"Description of campaign\", \"publisher\" : \"publisher1\", \"fieldofinterest\" : \"News\", \"region\" : \"Europe\", \"contenttype\" : \"Newsletter\", \"optin\" : \"" + optin_tbox.Text + "\", \"optout\" : \"" + optout_tbox.Text + "\", \"affiliatelink\" : \"" + affiliate_tbox.Text + "\", \"enddate\" : \"" + enddate_p + "\", \"date\" : \"" + todaysdate + "\" } ";
+            string jsonbody = "{ \"subject\" : \"" + subject_p + "\", \"addrfrom\" : \"" + addrfrom_p + "\", \"excerpt\" : \"" + excerpt_p.Substring(0, 300) + "\", \"score\" : \"0.0\", \"messageid\" : \"" + messageId_p + "\", \"preview\" : \"!!!preview!!!\", \"campaignname\" : \"Campaign name\", \"descriptionofcampaign\" : \"Description of campaign\", \"publisher\" : \"publisher1\", \"fieldofinterest\" : \"News\", \"region\" : \"Europe\", \"contenttype\" : \"Newsletter\", \"optin\" : \"" + optin_tbox.Text + "\", \"optout\" : \"" + optout_tbox.Text + "\", \"affiliatelink\" : \"" + affiliate_tbox.Text + "\", \"enddate\" : \"" + enddate_p + "\", \"date\" : \"" + todaysdate + "\" } ";
 
             //string jsonbody = "{ \"subject\" : \"" + subject_p + "\", \"addrfrom\" : \"" + addrfrom_p + "\", \"excerpt\" : \"" + excerpt_p + "\", \"score\" : \"0.0\", \"messageid\" : \"" + messageId_p + "\", \"preview\" : \"!!!preview!!!\", \"campaignname\" : \"Campaign name\", \"descriptionodcampaign\" : \"Description of campaign\", \"publisher\" : \"publisher1\", \"fieldofinterest\" : \"News\", \"region\" : \"Europe\", \"contenttype\" : \"Newsletter\", \"optin\" : \"" + optin_tbox.Text + "\", \"optout\" : \"" + optout_tbox.Text + "\", \"affiliatelink\" : \"" + affiliate_tbox.Text + "\"}";
             WebClient wc4 = new WebClient();
@@ -370,13 +371,15 @@ namespace parser4mails
             wc4.Headers.Add("Content-Type", "application/json");
             try
             {
+                string debug = hostelastic + "/emmares_search_test/_doc" + jsonbody;
+
                 wc4.UploadString(hostelastic + "/emmares_search_test/_doc", jsonbody);
                 //delete from pop
-                DeleteMessageByUID(uid_p);
+                  DeleteMessageByUID(uid_p);
             }
             catch (Exception ex)
             {
-              MessageBox.Show("Error on uploading to es (mail)" + ex);
+              MessageBox.Show("Error on uploading to es (mail)" + ex.Message);
             }
 
             this.Close();
