@@ -142,11 +142,6 @@ C:\Users\emmaresmvp\Desktop\Email-Approve-Beta\obj\Debug\parser4mails.applicatio
 C:\Users\emmaresmvp\Desktop\Email-Approve-Beta\obj\Debug\parser4mails.csproj.CopyComplete
 C:\Users\emmaresmvp\Desktop\Email-Approve-Beta\obj\Debug\parser4mails.exe
 C:\Users\emmaresmvp\Desktop\Email-Approve-Beta\obj\Debug\parser4mails.pdb
-C:\Users\emmaresmvp\Desktop\parserfinal\Email-Approve-Beta\obj\Debug\mailwindow.g.cs
-C:\Users\emmaresmvp\Desktop\parserfinal\Email-Approve-Beta\obj\Debug\MainWindow.g.cs
-C:\Users\emmaresmvp\Desktop\parserfinal\Email-Approve-Beta\obj\Debug\App.g.cs
-C:\Users\emmaresmvp\Desktop\parserfinal\Email-Approve-Beta\obj\Debug\parser4mails_MarkupCompile.cache
-C:\Users\emmaresmvp\Desktop\parserfinal\Email-Approve-Beta\obj\Debug\parser4mails_MarkupCompile.lref
 C:\Users\emmaresmvp\Desktop\parserfinal\Email-Approve-Beta\bin\Debug\parser4mails.exe.config
 C:\Users\emmaresmvp\Desktop\parserfinal\Email-Approve-Beta\bin\Debug\parser4mails.exe.manifest
 C:\Users\emmaresmvp\Desktop\parserfinal\Email-Approve-Beta\bin\Debug\parser4mails.application
@@ -181,6 +176,11 @@ C:\Users\emmaresmvp\Desktop\parserfinal\Email-Approve-Beta\bin\Debug\System.Diag
 C:\Users\emmaresmvp\Desktop\parserfinal\Email-Approve-Beta\bin\Debug\System.Memory.xml
 C:\Users\emmaresmvp\Desktop\parserfinal\Email-Approve-Beta\bin\Debug\System.Numerics.Vectors.xml
 C:\Users\emmaresmvp\Desktop\parserfinal\Email-Approve-Beta\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\emmaresmvp\Desktop\parserfinal\Email-Approve-Beta\obj\Debug\mailwindow.g.cs
+C:\Users\emmaresmvp\Desktop\parserfinal\Email-Approve-Beta\obj\Debug\MainWindow.g.cs
+C:\Users\emmaresmvp\Desktop\parserfinal\Email-Approve-Beta\obj\Debug\App.g.cs
+C:\Users\emmaresmvp\Desktop\parserfinal\Email-Approve-Beta\obj\Debug\parser4mails_MarkupCompile.cache
+C:\Users\emmaresmvp\Desktop\parserfinal\Email-Approve-Beta\obj\Debug\parser4mails_MarkupCompile.lref
 C:\Users\emmaresmvp\Desktop\parserfinal\Email-Approve-Beta\obj\Debug\mailwindow.baml
 C:\Users\emmaresmvp\Desktop\parserfinal\Email-Approve-Beta\obj\Debug\MainWindow.baml
 C:\Users\emmaresmvp\Desktop\parserfinal\Email-Approve-Beta\obj\Debug\parser4mails.g.resources
@@ -192,4 +192,3 @@ C:\Users\emmaresmvp\Desktop\parserfinal\Email-Approve-Beta\obj\Debug\parser4mail
 C:\Users\emmaresmvp\Desktop\parserfinal\Email-Approve-Beta\obj\Debug\parser4mails.csproj.CopyComplete
 C:\Users\emmaresmvp\Desktop\parserfinal\Email-Approve-Beta\obj\Debug\parser4mails.exe
 C:\Users\emmaresmvp\Desktop\parserfinal\Email-Approve-Beta\obj\Debug\parser4mails.pdb
-C:\Users\emmaresmvp\Desktop\parserfinal\Email-Approve-Beta\obj\Debug\parser4mails.csprojAssemblyReference.cache

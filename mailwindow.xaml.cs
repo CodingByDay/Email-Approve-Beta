@@ -460,8 +460,8 @@ namespace parser4mails
                 {
                     this.Dispatcher.Invoke(() =>
                     {
-                        mailelastic = "Error";
-                        MessageBox.Show("ERROR:" + ex.ToString() + "JSON:" + json + "EMAILCLASS:" + emailclass.ToString());
+                      // mailelastic = "Error";
+                     //   MessageBox.Show("ERROR:" + ex.ToString() + "JSON:" + json + "EMAILCLASS:" + emailclass.ToString());
                     });
            
                 }
@@ -487,46 +487,89 @@ namespace parser4mails
                 {
                     this.Dispatcher.Invoke(() =>
                     {
-                        MessageBox.Show("Url update:" + urlupdate + "***********************" + "   Json2: " + json2 + "***********************" + ex.ToString());
+                       MessageBox.Show("Url update:" + urlupdate + "***********************" + "   Json2: " + json2 + "***********************" + ex.ToString());
 
                     });
                 }
 
             });
         }
-        public void Email_btn_Click(object sender, RoutedEventArgs e)
+        private async Task show()
         {
-            //update email on elasticsearch whitelist
-            email_tbox.Background = Brushes.LightGreen;
-            email_tbox.IsReadOnly = true;
-            email_btn.Visibility = Visibility.Hidden;
-            optin_label.Visibility = Visibility.Visible;
-            optout_label.Visibility = Visibility.Visible;
-            affiliate_label.Visibility = Visibility.Visible;
-            optin_tbox.Visibility = Visibility.Visible;
-            optout_tbox.Visibility = Visibility.Visible;
-            affiliate_tbox.Visibility = Visibility.Visible;
-            optin_btn.Visibility = Visibility.Visible;
-            optout_btn.Visibility = Visibility.Visible;
-            affiliate_btn.Visibility = Visibility.Visible;
-            objavi_btn.Visibility = Visibility.Visible;
-            duration_label.Visibility = Visibility.Visible;
-            duration_tbox.Visibility = Visibility.Visible;
-            duration_btn.Visibility = Visibility.Visible;
+            await Task.Run(() =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    email_tbox.Background = Brushes.LightGreen;
+                    email_tbox.IsReadOnly = true;
+                    email_btn.Visibility = Visibility.Hidden;
+                    optin_label.Visibility = Visibility.Visible;
+                    optout_label.Visibility = Visibility.Visible;
+                    affiliate_label.Visibility = Visibility.Visible;
+                    optin_tbox.Visibility = Visibility.Visible;
+                    optout_tbox.Visibility = Visibility.Visible;
+                    affiliate_tbox.Visibility = Visibility.Visible;
+                    optin_btn.Visibility = Visibility.Visible;
+                    optout_btn.Visibility = Visibility.Visible;
+                    affiliate_btn.Visibility = Visibility.Visible;
+                    objavi_btn.Visibility = Visibility.Visible;
+                    duration_label.Visibility = Visibility.Visible;
+                    duration_tbox.Visibility = Visibility.Visible;
+                    duration_btn.Visibility = Visibility.Visible;
 
-            string mailelastic = "";
-            string json = "{\"email\": \"" + email_tbox.Text + "\", \"publish\": \"" + "false" + "\"}";
-            WebClient wc = new WebClient();
-            wc.Encoding = Encoding.UTF8;
-            wc.Headers.Add("Content-Type", "application/json");
-            try
-            {
-                wc.UploadString(hostelastic + "/whitelist/_doc", json);
-            }
-            catch(Exception ex)
-            {
-               MessageBox.Show("ERROR:" + ex.ToString() + "  HOST:" + hostelastic);
-            }
+                    string mailelastic = "";
+                    string json = "{\"email\": \"" + email_tbox.Text + "\", \"publish\": \"" + "false" + "\"}";
+                    WebClient wc = new WebClient();
+                    wc.Encoding = Encoding.UTF8;
+                    wc.Headers.Add("Content-Type", "application/json");
+                    try
+                    {
+                        wc.UploadString(hostelastic + "/whitelist/_doc", json);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("ERROR:" + ex.ToString() + "  HOST:" + hostelastic);
+                    }
+                });
+
+                //  MessageBox.Show(ex.ToString());
+            });
+              
+        }
+        public async void Email_btn_Click(object sender, RoutedEventArgs e)
+        {
+            await show();
+            //update email on elasticsearch whitelist
+            //email_tbox.Background = Brushes.LightGreen;
+            //email_tbox.IsReadOnly = true;
+            //email_btn.Visibility = Visibility.Hidden;
+            //optin_label.Visibility = Visibility.Visible;
+            //optout_label.Visibility = Visibility.Visible;
+            //affiliate_label.Visibility = Visibility.Visible;
+            //optin_tbox.Visibility = Visibility.Visible;
+            //optout_tbox.Visibility = Visibility.Visible;
+            //affiliate_tbox.Visibility = Visibility.Visible;
+            //optin_btn.Visibility = Visibility.Visible;
+            //optout_btn.Visibility = Visibility.Visible;
+            //affiliate_btn.Visibility = Visibility.Visible;
+            //objavi_btn.Visibility = Visibility.Visible;
+            //duration_label.Visibility = Visibility.Visible;
+            //duration_tbox.Visibility = Visibility.Visible;
+            //duration_btn.Visibility = Visibility.Visible;
+
+            //string mailelastic = "";
+            //string json = "{\"email\": \"" + email_tbox.Text + "\", \"publish\": \"" + "false" + "\"}";
+            //WebClient wc = new WebClient();
+            //wc.Encoding = Encoding.UTF8;
+            //wc.Headers.Add("Content-Type", "application/json");
+            //try
+            //{
+            //    wc.UploadString(hostelastic + "/whitelist/_doc", json);
+            //}
+            //catch(Exception ex)
+            //{
+            //   MessageBox.Show("ERROR:" + ex.ToString() + "  HOST:" + hostelastic);
+            //}
         }
         private void waitForExecution()
         {
@@ -571,7 +614,7 @@ namespace parser4mails
             }
             catch (Exception ex)
             {
-         MessageBox.Show("Url update:" + urlupdate + "***********************" + "   Json2: " + json2 + "***********************" + ex.ToString());
+            MessageBox.Show("Url update:" + urlupdate + "***********************" + "   Json2: " + json2 + "***********************" + ex.ToString());
             }
         }
 
