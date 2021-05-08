@@ -134,7 +134,7 @@ namespace parser4mails
 
 
 
-        // Finished application 2021 Janko 
+        
         private void DeleteMessageByUID(string messageId)
         {
             string hostName = "172.17.1.41";

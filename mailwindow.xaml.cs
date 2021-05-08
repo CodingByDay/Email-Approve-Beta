@@ -93,6 +93,17 @@ namespace parser4mails
         public string addrfrom_p = "";
         public string uid_p = "";
         public string enddate_p = "";
+        private string json;
+        private string json2;
+        private string jsonout;
+        private string json2out;
+        private string jsonaffiliate;
+        private string json2affiliate;
+        private string jsonduration;
+        private string json2duration;
+        private string json1;
+        private string jsonsecond;
+        private string jsonbody;
         const string hostelastic = "http://172.17.1.88:9200";
 
         public mailwindow(string subject, string excerpt, string messageId, string addrfrom2, string white_email, string white_optin, string white_optout, string white_affiliate, string uID, string enddate, string white_duration)
@@ -160,6 +171,329 @@ namespace parser4mails
             richtb.AppendText(excerpt);
         }
 
+        private async Task Affiliate()
+        {
+            await Task.Run(() =>
+            {
+                //update affiliate on elasticsearch whitelist
+                string index = "";
+                string mailelastic = "";
+                this.Dispatcher.Invoke(() =>
+                {
+                    jsonaffiliate = "{\"query\": {\"term\": {\"email\": \"" + email_tbox.Text + "\"}}}";
+
+                    //  MessageBox.Show(ex.ToString());
+                });
+                WebClient wc = new WebClient();
+                wc.Encoding = Encoding.UTF8;
+                wc.Headers.Add("Content-Type", "application/json");
+                try
+                {
+                    mailelastic = wc.UploadString(hostelastic + "/whitelist/_search?", jsonaffiliate);
+                    var emailclass = new Emailclass();
+                    emailclass = JsonConvert.DeserializeObject<Emailclass>(mailelastic);
+                    index = emailclass.Hits.HitsHits[0].Id;
+                }
+                catch
+                {
+                    mailelastic = "Error";
+                }
+
+                string mailelastic2 = "";
+                this.Dispatcher.Invoke(() =>
+                {
+                    json2affiliate = "{ \"doc\" : { \"affiliatelink\" : \"" + affiliate_tbox.Text + "\" } }";
+
+                    //  MessageBox.Show(ex.ToString());
+                });
+                WebClient wc2 = new WebClient();
+                wc2.Encoding = Encoding.UTF8;
+                wc2.Headers.Add("Content-Type", "application/json");
+                string urlupdate = hostelastic + "/whitelist/_doc/" + index + "/_update";
+                try
+                {
+                    mailelastic2 = wc2.UploadString(urlupdate, json2affiliate); // whitelist/_doc/GnRyDWsBFWWaSa5YP7VY/_update
+                }
+                catch (Exception ex)
+                {
+                    //      MessageBox.Show(ex.ToString());
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        //  MessageBox.Show(ex.ToString());
+                    });
+                }
+            });
+        }
+
+        private async Task Duration()
+        {
+            await Task.Run(()=> {
+                //update duration in days on elasticsearch whitelist
+                string index = "";
+                string mailelastic = "";
+                this.Dispatcher.Invoke(() =>
+                {
+                    jsonduration = "{\"query\": {\"term\": {\"email\": \"" + email_tbox.Text + "\"}}}";
+
+                    //  MessageBox.Show(ex.ToString());
+                });
+                WebClient wc = new WebClient();
+                wc.Encoding = Encoding.UTF8;
+                wc.Headers.Add("Content-Type", "application/json");
+                try
+                {
+                    mailelastic = wc.UploadString(hostelastic + "/whitelist/_search?", jsonduration);
+                    var emailclass = new Emailclass();
+                    emailclass = JsonConvert.DeserializeObject<Emailclass>(mailelastic);
+                    index = emailclass.Hits.HitsHits[0].Id;
+                }
+                catch
+                {
+                    mailelastic = "Error";
+                }
+                this.Dispatcher.Invoke(() =>
+                {
+                    json2duration = "{ \"doc\" : { \"duration\" : \"" + duration_tbox.Text + "\" } }";
+
+                    //  MessageBox.Show(ex.ToString());
+                });
+                WebClient wc2 = new WebClient();
+                wc2.Encoding = Encoding.UTF8;
+                wc2.Headers.Add("Content-Type", "application/json");
+                string urlupdate = hostelastic + "/whitelist/_doc/" + index + "/_update";
+                try
+                {
+                    wc2.UploadString(urlupdate, json2duration); // whitelist/_doc/GnRyDWsBFWWaSa5YP7VY/_update
+                }
+                catch (Exception ex)
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        this.Close();
+                        MessageBox.Show(ex.ToString());
+                        //  MessageBox.Show(ex.ToString());
+                    });
+                    
+                }
+            });
+        }
+        private async Task publish()
+        {
+            await Task.Run(async() =>
+            {
+                await Optin();
+                this.Dispatcher.Invoke(() =>
+                {
+                    bar.Value = 25;
+                });
+                await Optout();
+                this.Dispatcher.Invoke(() =>
+                {
+                    bar.Value = 50;
+                });
+                await Affiliate();
+                this.Dispatcher.Invoke(() =>
+                {
+                    bar.Value = 75;
+                });
+                await Duration();
+                this.Dispatcher.Invoke(() =>
+                {
+                    bar.Value = 100;
+                });
+
+
+                //update publish on elasticsearch whitelist
+                string index = "";
+                string mailelastic = "";
+                this.Dispatcher.Invoke(() =>
+                {
+                    json1 = "{\"query\": {\"term\": {\"email\": \"" + email_tbox.Text + "\"}}}";
+                });
+                WebClient wc = new WebClient();
+                wc.Encoding = Encoding.UTF8;
+                wc.Headers.Add("Content-Type", "application/json");
+                try
+                {
+                    mailelastic = wc.UploadString(hostelastic + "/whitelist/_search?", json1);
+                    var emailclass = new Emailclass();
+                    emailclass = JsonConvert.DeserializeObject<Emailclass>(mailelastic);
+                    index = emailclass.Hits.HitsHits[0].Id;
+                }
+                catch
+                {
+                    mailelastic = "Error";
+                }
+
+                string mailelastic2 = "";
+                this.Dispatcher.Invoke(() =>
+                {
+                    jsonsecond = "{ \"doc\" : { \"publish\" : \"" + "true" + "\" } }";
+                });
+                WebClient wc2 = new WebClient();
+                wc2.Encoding = Encoding.UTF8;
+                wc2.Headers.Add("Content-Type", "application/json");
+                string urlupdate = hostelastic + "/whitelist/_doc/" + index + "/_update";
+                try
+                {
+                    mailelastic2 = wc2.UploadString(urlupdate, jsonsecond); // whitelist/_doc/GnRyDWsBFWWaSa5YP7VY/_update
+                }
+                catch (Exception ex)
+                {
+                    //    MessageBox.Show(ex.ToString());
+                }
+
+                string todaysdate = DateTime.Today.ToString("yyyy-MM-dd");
+                this.Dispatcher.Invoke(() =>
+                {
+                    if (duration_tbox.Text != "")
+                        enddate_p = DateTime.Today.AddDays(Convert.ToDouble(duration_tbox.Text)).ToString("yyyy-MM-dd");
+                    excerpt_p = excerpt_p.Replace(" ", string.Empty);
+                });
+           
+                //add mail to elasticsearch
+                this.Dispatcher.Invoke(() =>
+                {
+                    jsonbody = "{ \"subject\" : \"" + subject_p + "\", \"addrfrom\" : \"" + addrfrom_p + "\", \"excerpt\" : \"" + excerpt_p.Substring(0, 300) + "\", \"score\" : \"0.0\", \"messageid\" : \"" + messageId_p + "\", \"preview\" : \"!!!preview!!!\", \"campaignname\" : \"Campaign name\", \"descriptionofcampaign\" : \"Description of campaign\", \"publisher\" : \"publisher1\", \"fieldofinterest\" : \"News\", \"region\" : \"Europe\", \"contenttype\" : \"Newsletter\", \"optin\" : \"" + optin_tbox.Text + "\", \"optout\" : \"" + optout_tbox.Text + "\", \"affiliatelink\" : \"" + affiliate_tbox.Text + "\", \"enddate\" : \"" + enddate_p + "\", \"date\" : \"" + todaysdate + "\" } ";
+                });
+                //string jsonbody = "{ \"subject\" : \"" + subject_p + "\", \"addrfrom\" : \"" + addrfrom_p + "\", \"excerpt\" : \"" + excerpt_p + "\", \"score\" : \"0.0\", \"messageid\" : \"" + messageId_p + "\", \"preview\" : \"!!!preview!!!\", \"campaignname\" : \"Campaign name\", \"descriptionodcampaign\" : \"Description of campaign\", \"publisher\" : \"publisher1\", \"fieldofinterest\" : \"News\", \"region\" : \"Europe\", \"contenttype\" : \"Newsletter\", \"optin\" : \"" + optin_tbox.Text + "\", \"optout\" : \"" + optout_tbox.Text + "\", \"affiliatelink\" : \"" + affiliate_tbox.Text + "\"}";
+                WebClient wc4 = new WebClient();
+                wc4.Encoding = Encoding.UTF8;
+                wc4.Headers.Add("Content-Type", "application/json");
+                try
+                {
+                    string debug = hostelastic + "/emmares_search_test/_doc" + jsonbody;
+
+                    wc4.UploadString(hostelastic + "/emmares_search_test/_doc", jsonbody);
+                    //delete from pop
+                    DeleteMessageByUID(uid_p);
+                }
+                catch (Exception ex)
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        MessageBox.Show("Error on uploading to es (mail)" + ex.Message);
+                    });
+                }
+                this.Dispatcher.Invoke(() =>
+                {
+                    this.Close();
+                });
+             
+            });
+        }
+        private async Task Optout()
+        {
+            await Task.Run(() =>
+            {
+                string index = "";
+                string mailelastic = "";
+                this.Dispatcher.Invoke(() =>
+                {
+                    jsonout = "{\"query\": {\"term\": {\"email\": \"" + email_tbox.Text + "\"}}}";
+
+                });
+                WebClient wc = new WebClient();
+                wc.Encoding = Encoding.UTF8;
+                wc.Headers.Add("Content-Type", "application/json");
+                try
+                {
+                    mailelastic = wc.UploadString(hostelastic + "/whitelist/_search?", jsonout);
+                    var emailclass = new Emailclass();
+                    emailclass = JsonConvert.DeserializeObject<Emailclass>(mailelastic);
+                    index = emailclass.Hits.HitsHits[0].Id;
+                }
+                catch
+                {
+                    mailelastic = "Error";
+                }
+
+                string mailelastic2 = "";
+                this.Dispatcher.Invoke(() =>
+                {
+                    json2out = "{ \"doc\" : { \"optout\" : \"" + optout_tbox.Text + "\" } }";
+
+                });
+                WebClient wc2 = new WebClient();
+                wc2.Encoding = Encoding.UTF8;
+                wc2.Headers.Add("Content-Type", "application/json");
+                string urlupdate = hostelastic + "/whitelist/_doc/" + index + "/_update";
+                try
+                {
+                    mailelastic2 = wc2.UploadString(urlupdate, json2out); // whitelist/_doc/GnRyDWsBFWWaSa5YP7VY/_update
+                }
+                catch (Exception ex)
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        //  MessageBox.Show(ex.ToString());
+                    });
+                  
+                }
+
+            });
+        }
+
+        private async Task Optin()
+        {
+            await Task.Run(() =>
+            {
+                string index = "";
+                string mailelastic = "";
+                this.Dispatcher.Invoke(() =>
+                {
+                    json = "{\"query\": {\"term\": {\"email\": \"" + email_tbox.Text + "\"}}}";
+                });
+                WebClient wc = new WebClient();
+                wc.Encoding = Encoding.UTF8;
+                wc.Headers.Add("Content-Type", "application/json");
+                var emailclass = new Emailclass();
+                try
+                {
+                    mailelastic = wc.UploadString(hostelastic + "/whitelist/_search", json);
+
+                    emailclass = JsonConvert.DeserializeObject<Emailclass>(mailelastic);
+                    index = emailclass.Hits.HitsHits[0].Id;
+
+                }
+                catch (Exception ex)
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        mailelastic = "Error";
+                        MessageBox.Show("ERROR:" + ex.ToString() + "JSON:" + json + "EMAILCLASS:" + emailclass.ToString());
+                    });
+           
+                }
+
+                string mailelastic2 = "";
+                this.Dispatcher.Invoke(() =>
+                {
+                    json2 = "{ \"doc\" : { \"optin\" : \"" + optin_tbox.Text + "\" } }";
+                });
+                WebClient wc2 = new WebClient();
+                wc2.Encoding = Encoding.UTF8;
+                wc2.Headers.Add("Content-Type", "application/json");
+                string urlupdate = hostelastic + "/whitelist/_doc/" + index.ToString() + "/_update";
+
+                try
+                {
+                  
+                        mailelastic2 = wc2.UploadString(urlupdate, json2); // whitelist/_doc/GnRyDWsBFWWaSa5YP7VY/_update
+               
+                    
+                }
+                catch (Exception ex)
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        MessageBox.Show("Url update:" + urlupdate + "***********************" + "   Json2: " + json2 + "***********************" + ex.ToString());
+
+                    });
+                }
+
+            });
+        }
         public void Email_btn_Click(object sender, RoutedEventArgs e)
         {
             //update email on elasticsearch whitelist
@@ -316,74 +650,77 @@ namespace parser4mails
             }
         }
 
-        public void Objavi_btn_Click(object sender, RoutedEventArgs e)
+        public async void Objavi_btn_Click(object sender, RoutedEventArgs e)
         {
-            Optin_btn_Click(sender, e);
-            Optout_btn_Click(sender, e);
-            Affiliate_btn_Click(sender, e);
-            Duration_btn_Click(sender, e);
+            await publish();
+            //Optin_btn_Click(sender, e);
+            //Optout_btn_Click(sender, e);
+            //Affiliate_btn_Click(sender, e);
+            //Duration_btn_Click(sender, e);
 
 
-            //update publish on elasticsearch whitelist
-            string index = "";
-            string mailelastic = "";
-            string json = "{\"query\": {\"term\": {\"email\": \"" + email_tbox.Text + "\"}}}";
-            WebClient wc = new WebClient();
-            wc.Encoding = Encoding.UTF8;
-            wc.Headers.Add("Content-Type", "application/json");
-            try
-            {
-                mailelastic = wc.UploadString(hostelastic + "/whitelist/_search?", json);
-                var emailclass = new Emailclass();
-                emailclass = JsonConvert.DeserializeObject<Emailclass>(mailelastic);
-                index = emailclass.Hits.HitsHits[0].Id;
-            }
-            catch
-            {
-                mailelastic = "Error";
-            }
+            ////update publish on elasticsearch whitelist
+            //string index = "";
+            //string mailelastic = "";
+            //string json = "{\"query\": {\"term\": {\"email\": \"" + email_tbox.Text + "\"}}}";
+            //WebClient wc = new WebClient();
+            //wc.Encoding = Encoding.UTF8;
+            //wc.Headers.Add("Content-Type", "application/json");
+            //try
+            //{
+            //    mailelastic = wc.UploadString(hostelastic + "/whitelist/_search?", json);
+            //    var emailclass = new Emailclass();
+            //    emailclass = JsonConvert.DeserializeObject<Emailclass>(mailelastic);
+            //    index = emailclass.Hits.HitsHits[0].Id;
+            //}
+            //catch
+            //{
+            //    mailelastic = "Error";
+            //}
 
-            string mailelastic2 = "";
-            string json2 = "{ \"doc\" : { \"publish\" : \"" + "true" + "\" } }";
-            WebClient wc2 = new WebClient();
-            wc2.Encoding = Encoding.UTF8;
-            wc2.Headers.Add("Content-Type", "application/json");
-            string urlupdate = hostelastic + "/whitelist/_doc/" + index + "/_update";
-            try
-            {
-                mailelastic2 = wc2.UploadString(urlupdate, json2); // whitelist/_doc/GnRyDWsBFWWaSa5YP7VY/_update
-            }
-            catch (Exception ex)
-            {
-            //    MessageBox.Show(ex.ToString());
-            }
+            //string mailelastic2 = "";
+            //string json2 = "{ \"doc\" : { \"publish\" : \"" + "true" + "\" } }";
+            //WebClient wc2 = new WebClient();
+            //wc2.Encoding = Encoding.UTF8;
+            //wc2.Headers.Add("Content-Type", "application/json");
+            //string urlupdate = hostelastic + "/whitelist/_doc/" + index + "/_update";
+            //try
+            //{
+            //    mailelastic2 = wc2.UploadString(urlupdate, json2); // whitelist/_doc/GnRyDWsBFWWaSa5YP7VY/_update
+            //}
+            //catch (Exception ex)
+            //{
+            ////    MessageBox.Show(ex.ToString());
+            //}
 
-            string todaysdate = DateTime.Today.ToString("yyyy-MM-dd");
-            if (duration_tbox.Text != "")
-                enddate_p = DateTime.Today.AddDays(Convert.ToDouble(duration_tbox.Text)).ToString("yyyy-MM-dd");
-            excerpt_p = excerpt_p.Replace(" ", string.Empty);
-            //add mail to elasticsearch
-            string jsonbody = "{ \"subject\" : \"" + subject_p + "\", \"addrfrom\" : \"" + addrfrom_p + "\", \"excerpt\" : \"" + excerpt_p.Substring(0, 300) + "\", \"score\" : \"0.0\", \"messageid\" : \"" + messageId_p + "\", \"preview\" : \"!!!preview!!!\", \"campaignname\" : \"Campaign name\", \"descriptionofcampaign\" : \"Description of campaign\", \"publisher\" : \"publisher1\", \"fieldofinterest\" : \"News\", \"region\" : \"Europe\", \"contenttype\" : \"Newsletter\", \"optin\" : \"" + optin_tbox.Text + "\", \"optout\" : \"" + optout_tbox.Text + "\", \"affiliatelink\" : \"" + affiliate_tbox.Text + "\", \"enddate\" : \"" + enddate_p + "\", \"date\" : \"" + todaysdate + "\" } ";
+            //string todaysdate = DateTime.Today.ToString("yyyy-MM-dd");
+            //if (duration_tbox.Text != "")
+            //    enddate_p = DateTime.Today.AddDays(Convert.ToDouble(duration_tbox.Text)).ToString("yyyy-MM-dd");
+            //excerpt_p = excerpt_p.Replace(" ", string.Empty);
+            ////add mail to elasticsearch
+            //string jsonbody = "{ \"subject\" : \"" + subject_p + "\", \"addrfrom\" : \"" + addrfrom_p + "\", \"excerpt\" : \"" + excerpt_p.Substring(0, 300) + "\", \"score\" : \"0.0\", \"messageid\" : \"" + messageId_p + "\", \"preview\" : \"!!!preview!!!\", \"campaignname\" : \"Campaign name\", \"descriptionofcampaign\" : \"Description of campaign\", \"publisher\" : \"publisher1\", \"fieldofinterest\" : \"News\", \"region\" : \"Europe\", \"contenttype\" : \"Newsletter\", \"optin\" : \"" + optin_tbox.Text + "\", \"optout\" : \"" + optout_tbox.Text + "\", \"affiliatelink\" : \"" + affiliate_tbox.Text + "\", \"enddate\" : \"" + enddate_p + "\", \"date\" : \"" + todaysdate + "\" } ";
 
-            //string jsonbody = "{ \"subject\" : \"" + subject_p + "\", \"addrfrom\" : \"" + addrfrom_p + "\", \"excerpt\" : \"" + excerpt_p + "\", \"score\" : \"0.0\", \"messageid\" : \"" + messageId_p + "\", \"preview\" : \"!!!preview!!!\", \"campaignname\" : \"Campaign name\", \"descriptionodcampaign\" : \"Description of campaign\", \"publisher\" : \"publisher1\", \"fieldofinterest\" : \"News\", \"region\" : \"Europe\", \"contenttype\" : \"Newsletter\", \"optin\" : \"" + optin_tbox.Text + "\", \"optout\" : \"" + optout_tbox.Text + "\", \"affiliatelink\" : \"" + affiliate_tbox.Text + "\"}";
-            WebClient wc4 = new WebClient();
-            wc4.Encoding = Encoding.UTF8;
-            wc4.Headers.Add("Content-Type", "application/json");
-            try
-            {
-                string debug = hostelastic + "/emmares_search_test/_doc" + jsonbody;
+            ////string jsonbody = "{ \"subject\" : \"" + subject_p + "\", \"addrfrom\" : \"" + addrfrom_p + "\", \"excerpt\" : \"" + excerpt_p + "\", \"score\" : \"0.0\", \"messageid\" : \"" + messageId_p + "\", \"preview\" : \"!!!preview!!!\", \"campaignname\" : \"Campaign name\", \"descriptionodcampaign\" : \"Description of campaign\", \"publisher\" : \"publisher1\", \"fieldofinterest\" : \"News\", \"region\" : \"Europe\", \"contenttype\" : \"Newsletter\", \"optin\" : \"" + optin_tbox.Text + "\", \"optout\" : \"" + optout_tbox.Text + "\", \"affiliatelink\" : \"" + affiliate_tbox.Text + "\"}";
+            //WebClient wc4 = new WebClient();
+            //wc4.Encoding = Encoding.UTF8;
+            //wc4.Headers.Add("Content-Type", "application/json");
+            //try
+            //{
+            //    string debug = hostelastic + "/emmares_search_test/_doc" + jsonbody;
 
-                wc4.UploadString(hostelastic + "/emmares_search_test/_doc", jsonbody);
-                //delete from pop
-                  DeleteMessageByUID(uid_p);
-            }
-            catch (Exception ex)
-            {
-              MessageBox.Show("Error on uploading to es (mail)" + ex.Message);
-            }
+            //    wc4.UploadString(hostelastic + "/emmares_search_test/_doc", jsonbody);
+            //    //delete from pop
+            //      DeleteMessageByUID(uid_p);
+            //}
+            //catch (Exception ex)
+            //{
+            //  MessageBox.Show("Error on uploading to es (mail)" + ex.Message);
+            //}
 
-            this.Close();
+            //this.Close();
         }
+
+        
          public void Izbrisi_potrdi_btn_Click(object sender, RoutedEventArgs e)
         {
             Optin_btn_Click(sender, e);
