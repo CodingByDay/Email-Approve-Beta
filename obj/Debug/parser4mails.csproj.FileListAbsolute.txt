@@ -192,3 +192,4 @@ C:\Users\emmaresmvp\Desktop\parserfinal\Email-Approve-Beta\obj\Debug\parser4mail
 C:\Users\emmaresmvp\Desktop\parserfinal\Email-Approve-Beta\obj\Debug\parser4mails.csproj.CopyComplete
 C:\Users\emmaresmvp\Desktop\parserfinal\Email-Approve-Beta\obj\Debug\parser4mails.exe
 C:\Users\emmaresmvp\Desktop\parserfinal\Email-Approve-Beta\obj\Debug\parser4mails.pdb
+C:\Users\emmaresmvp\Desktop\parserfinal\Email-Approve-Beta\obj\Debug\parser4mails.csprojAssemblyReference.cache

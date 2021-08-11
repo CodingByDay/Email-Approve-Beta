@@ -174,7 +174,7 @@ namespace parser4mails
 
         private async Task<bool> WaitForItToWork(string Url, string FileName, string PathToPicture)
         {
-                    var argument = @"C:\\Users\emmaresmvp\Desktop\Thumbnail\bin\Release\GetSiteThumbnail.exe" + " " + @Url + " " + @"C:\\inetpub\wwwroot\App_Data\images\" + FileName;
+                    var argument = @"C:\\Users\emmaresmvp\Desktop\Thumbnail\bin\Release\GetSiteThumbnail.exe" + " " + @Url + " " + @"C:\\inetpub\wwwroot\wwwroot\images\" + FileName;
                     var final = "/C" + argument;
                     // var argument = @"/C C:\Users\emmaresmvp\Desktop\GetSiteThumbnail.exe" +Url + "C:/Users\\emmaresmvp\\Desktop\\cognifis.jpg 1280 1024 640 480";
 
@@ -388,13 +388,13 @@ namespace parser4mails
 
                             if (emailclass.Hits.Total != 0)
                             {
-                               //  MessageBox.Show("ta mail je na blacklisti " + emailclass.Hits.HitsHits[0]?.Source.Email.ToString()); //.Query.Term.Email.ToString());
+                                // MessageBox.Show("ta mail je na blacklisti " + emailclass.Hits.HitsHits[0]?.Source.Email.ToString()); //.Query.Term.Email.ToString());
                                 DeleteMessageByUID(uID);
                             }
                             else
                             {
                                 //
-                                //MessageBox.Show(Regex.Replace(excerpt, @"\r\n?|\n", " "));
+                                // MessageBox.Show(Regex.Replace(excerpt, @"\r\n?|\n", " "));
                                 try
                                 {
                                     var xwhitelist = Newtonsoft.Json.JsonConvert.DeserializeObject(mailelastic2);
@@ -461,8 +461,7 @@ namespace parser4mails
                                         //MessageBox.Show("main enddate " + enddate);
                                         excerpt = excerpt.Replace(" ", string.Empty);
                                         // MessageBox.Show(emailclass2.Hits.HitsHits[0].Source.Email + " o " + emailclass2.Hits.HitsHits[0].Source.Optin + " p " + emailclass2.Hits.HitsHits[0].Source.Publish);
-                                        string jsonbody = "{ \"subject\" : \"" + subject + "\", \"addrfrom\" : \"" + addrfrom2 + "\", \"excerpt\" : \"" + excerpt.Replace(" ", string.Empty).Substring(0,300) + "\", \"score\" : \"0.0\", \"messageid\" : \"" + messageId + "\", \"preview\" : \"!!!preview!!!\", \"campaignname\" : \"Campaign name\", \"descriptionofcampaign\" : \"Description of campaign\", \"publisher\" : \"publisher1\", \"fieldofinterest\" : \"News\", \"region\" : \"Europe\", \"contenttype\" : \"Newsletter\", \"optin\" : \"" + emailclass2.Hits.HitsHits[0]?.Source.Optin + "\", \"optout\" : \"" + emailclass2.Hits.HitsHits[0]?.Source.Optout + "\", \"affiliatelink\" : \"" + emailclass2.Hits.HitsHits[0]?.Source.Affiliatelink + "\", \"enddate\" : \"" + enddate + "\", \"date\" : \"" + todaysdate + "\" }";
-                                     
+                                        string jsonbody = "{ \"subject\" : \"" + subject + "\", \"addrfrom\" : \"" + addrfrom2 + "\", \"excerpt\" : \"" + excerpt + "\", \"score\" : \"0.0\", \"messageid\" : \"" + messageId + "\", \"preview\" : \"!!!preview!!!\", \"campaignname\" : \"Campaign name\", \"descriptionofcampaign\" : \"Description of campaign\", \"publisher\" : \"publisher1\", \"fieldofinterest\" : \"News\", \"region\" : \"Europe\", \"contenttype\" : \"Newsletter\", \"optin\" : \"" + emailclass2.Hits.HitsHits[0]?.Source.Optin + "\", \"optout\" : \"" + emailclass2.Hits.HitsHits[0]?.Source.Optout + "\", \"affiliatelink\" : \"" + emailclass2.Hits.HitsHits[0]?.Source.Affiliatelink + "\", \"enddate\" : \"" + enddate + "\", \"date\" : \"" + todaysdate + "\" }   ";
                                         WebClient wc4 = new WebClient();
                                         wc4.Encoding = Encoding.UTF8;
                                         
@@ -471,7 +470,6 @@ namespace parser4mails
                                         {
                                             var debug2 = hostelastic + "/emmares_search_test/_doc/" + jsonbody;
                                             wc4.UploadString(hostelastic + "/emmares_search_test/_doc", jsonbody);
-                                            
                                             //delete from pop
                                             DeleteMessageByUID(uID);
                                             string potdomaila = "C:/inetpub/wwwroot/App_Data/pages/";
@@ -479,7 +477,7 @@ namespace parser4mails
                                         }
                                         catch (Exception ex)
                                         {
-                                          //  MessageBox.Show("Error on uploading to es (Main) " + ex);
+                                         //   MessageBox.Show("Error on uploading to es (Main) " + ex);
                                             string logerror = "C:/inetpub/wwwroot/App_Data/errors/";
                                             System.IO.File.WriteAllText(logerror + messageId + ".txt", jsonbody, Encoding.UTF8);
                                         }
