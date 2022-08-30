@@ -55,7 +55,7 @@
             </ProgressBar.RenderTransform>
         </ProgressBar>
         <ProgressBar x:Name="durationbar" Grid.Column="2" HorizontalAlignment="Left" Height="16" Margin="317,418,0,0" VerticalAlignment="Top" Width="240"/>
-        <Button Content="Zapri" Grid.Column="2" HorizontalAlignment="Left" Margin="562,579,-58,0" VerticalAlignment="Top" Width="85" Height="45" RenderTransformOrigin="0.52,-0.361" Click="Button_Click"/>
+        <Button Content="Zapri" Grid.Column="2" HorizontalAlignment="Left" Margin="562,586,-42,0" VerticalAlignment="Top" Width="69" Height="29" RenderTransformOrigin="0.52,-0.361" Click="Button_Click"/>
 
 
     </Grid>
